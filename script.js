@@ -1,40 +1,37 @@
-/**
- * Lógica de animación mejorada y a prueba de fallos.
- * Primero oculta los elementos SOLO si el JavaScript funciona,
- * lo que evita cualquier riesgo de que la página se quede en negro.
- */
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener("DOMContentLoaded", () => {
     
-    // Seleccionar todos los elementos a animar
-    const revealElements = document.querySelectorAll('.reveal');
+    // Seleccionar todos los elementos que van a ser animados
+    const animatedElements = document.querySelectorAll('.fade-up, .fade-left, .fade-right');
 
-    // 1. Preparar elementos (ocultarlos inicialmente por JS)
-    // De esta forma, si JS falla, el CSS los mantiene 100% visibles.
-    revealElements.forEach(el => {
-        el.classList.add('js-hidden');
-    });
-
-    // 2. Configurar el observador de scroll estándar
+    // Configuración del Observer
     const observerOptions = {
-        root: null, // Vigila el scroll estándar de la ventana (mucho más estable)
+        root: null,
         rootMargin: '0px',
         threshold: 0.2 // Se activa cuando el 20% del elemento es visible
     };
 
-    // 3. Callback para cuando el usuario hace scroll
-    const observerCallback = (entries) => {
+    // Crear el Intersection Observer
+    const observer = new IntersectionObserver((entries, observer) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
-                // Al entrar en pantalla, quitamos la clase oculta
-                entry.target.classList.remove('js-hidden');
+                // Agregar clase para disparar la animación CSS
+                entry.target.classList.add('in-view');
+            } else {
+                // Opcional: Quitar la clase si quieres que la animación se repita al volver a la diapositiva
+                // Para una experiencia de Keynote, las animaciones suelen repetirse al navegar atrás y adelante.
+                entry.target.classList.remove('in-view');
             }
         });
-    };
+    }, observerOptions);
 
-    const observer = new IntersectionObserver(observerCallback, observerOptions);
-
-    // 4. Iniciar la observación
-    revealElements.forEach(el => {
-        observer.observe(el);
+    // Observar cada elemento
+    animatedElements.forEach(element => {
+        observer.observe(element);
     });
+
+    // Pequeño hack para asegurar que la primera diapositiva se anime inmediatamente al cargar
+    setTimeout(() => {
+        const firstSlideElements = document.querySelectorAll('.slide:first-child .fade-up, .slide:first-child .fade-left, .slide:first-child .fade-right');
+        firstSlideElements.forEach(el => el.classList.add('in-view'));
+    }, 100);
 });
