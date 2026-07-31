@@ -1,301 +1,359 @@
-/* ==========================================================================
-   DISEÑO PRO (NVIDIA / APPLE) - MINIMALISMO Y SIMETRÍA ABSOLUTA
-   ========================================================================== */
+/* Variables y Configuración Base (Estética Apple x NVIDIA) */
 :root {
-    --bg-color: #000000;
-    --surface-color: #111112;
-    --border-color: #2a2a2c;
-    --text-primary: #f5f5f7;
-    --text-secondary: #86868b;
-    --accent: #2997ff; /* Azul elegante de interfaces Pro */
-    
-    --font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    --bg-dark: #0a0a0c;
+    --bg-darker: #050505;
+    --text-main: #f5f5f7;
+    --text-muted: #a1a1a6;
+    --nvidia-green: #76b900;
+    --emerald-green: #10b981;
+    --apple-blue: #0066cc;
+    --glass-bg: rgba(255, 255, 255, 0.03);
+    --glass-border: rgba(255, 255, 255, 0.08);
+    --shadow-soft: 0 20px 40px rgba(0, 0, 0, 0.5);
+    --shadow-glow: 0 0 30px rgba(118, 185, 0, 0.15);
+    --transition-smooth: 0.8s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    /* Suavizado de fuentes para pantallas de alta resolución */
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
 }
 
 body {
-    background-color: var(--bg-color);
-    color: var(--text-primary);
-    font-family: var(--font-family);
-    line-height: 1.5;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background-color: var(--bg-dark);
+    color: var(--text-main);
+    overflow: hidden; /* Evita cualquier scroll tradicional */
+    height: 100vh;
+    width: 100vw;
 }
 
-.container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 5vw;
+/* Citaciones sutiles para mantener la limpieza visual */
+body :not(h1):not(h2) > [cite] {
+    font-size: 0.7em;
+    color: var(--text-muted);
+    opacity: 0.5;
+    vertical-align: super;
 }
 
-/* ==========================================================================
-   TIPOGRAFÍA Y ALINEACIÓN
-   ========================================================================== */
-h1 {
-    font-size: clamp(3.5rem, 8vw, 6rem);
-    font-weight: 700;
-    letter-spacing: -0.04em;
-    line-height: 1.05;
-    margin-bottom: 1rem;
+/* Barra de progreso */
+.progress-bar-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: rgba(255, 255, 255, 0.1);
+    z-index: 1000;
 }
 
-h2.section-title, .comparison-header h2 {
-    font-size: clamp(2.5rem, 5vw, 4rem);
-    font-weight: 700;
+.progress-bar {
+    height: 100%;
+    background: linear-gradient(90deg, var(--apple-blue), var(--nvidia-green));
+    width: 0%;
+    transition: width 0.4s ease;
+}
+
+/* Contenedor de la presentación */
+.presentation {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+/* Base de las Diapositivas */
+.slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    visibility: hidden;
+    padding: 6vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity var(--transition-smooth), transform var(--transition-smooth);
+    transform: translateY(30px) scale(0.98);
+}
+
+.slide.active {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0) scale(1);
+    z-index: 10;
+}
+
+/* Tipografía y Elementos Comunes */
+h1, h2, h3 {
+    font-weight: 800;
     letter-spacing: -0.03em;
-    margin-bottom: 3rem;
-    text-align: center;
+    margin-bottom: 0.5em;
+    line-height: 1.1;
 }
 
-h3 {
-    font-size: 1.5rem;
-    font-weight: 600;
-    margin-bottom: 1rem;
-    color: var(--text-primary);
-}
-
+h1 { font-size: 4rem; }
+h2 { font-size: 3rem; }
 p {
     font-size: 1.1rem;
-    color: var(--text-secondary);
+    line-height: 1.6;
+    color: var(--text-muted);
     margin-bottom: 1rem;
 }
 
-/* ==========================================================================
-   SECCIÓN 1: HERO PORTADA
-   ========================================================================== */
-.hero-section {
-    position: relative;
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    align-items: center;
-    padding-bottom: 10vh;
-    text-align: center;
+.gradient-text {
+    background: linear-gradient(135deg, #fff, var(--text-muted));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
-.hero-image-container {
-    position: absolute;
-    top: 0; left: 0; width: 100%; height: 100%;
-    z-index: -1;
+.blue-variant {
+    background: linear-gradient(135deg, #fff, var(--apple-blue));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
-.hero-image-container img {
-    width: 100%; height: 100%;
-    object-fit: cover;
-    object-position: center 30%;
-    opacity: 0.6;
+.nvidia-accent {
+    color: var(--nvidia-green);
 }
 
-.hero-fade {
-    position: absolute;
-    bottom: 0; left: 0; width: 100%; height: 60%;
-    background: linear-gradient(to top, var(--bg-color) 0%, transparent 100%);
+.separator {
+    width: 60px;
+    height: 2px;
+    background: var(--nvidia-green);
+    margin: 2rem auto;
+    border-radius: 2px;
 }
 
-.subtitle {
-    font-size: clamp(1.2rem, 3vw, 2rem);
-    color: var(--text-secondary);
+/* Componentes Glassmorphism */
+.glass-panel, .glass-card, .data-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border: 1px solid var(--glass-border);
+    border-radius: 24px;
+    padding: 3rem;
+    box-shadow: var(--shadow-soft);
 }
 
-/* ==========================================================================
-   SECCIÓN 2: INTRO (Grid Perfecto)
-   ========================================================================== */
-.intro-section {
-    padding: 10vh 0;
-    border-bottom: 1px solid var(--border-color);
-}
-
-.grid-2 {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 4rem;
-}
-
-.text-block h3 { color: var(--text-secondary); text-transform: uppercase; letter-spacing: 2px; font-size: 0.9rem;}
-.text-block p { color: var(--text-primary); font-size: 1.3rem; line-height: 1.6; }
-
-/* ==========================================================================
-   SECCIÓN 3: BENTO GRID (Las Tarjetas No se Rompen)
-   ========================================================================== */
-.bento-section {
-    padding: 12vh 0;
-}
-
-.bento-grid {
-    display: grid;
-    /* Grid estricto: Se adapta manteniendo proporciones sin colapsar */
-    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-    gap: 2rem;
-}
-
-.bento-card {
-    background-color: var(--surface-color);
-    border-radius: 20px;
+/* Tratamiento de Imágenes Premium */
+.image-container {
+    border-radius: 24px;
     overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    border: 1px solid var(--border-color);
+    box-shadow: var(--shadow-soft);
+    position: relative;
 }
 
-.card-img-wrapper {
-    width: 100%;
-    height: 250px; /* Altura fija para mantener simetría perfecta */
-    background: #000;
-}
-
-.card-img-wrapper img {
+.image-container img {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    display: block;
+    transition: transform 10s ease;
 }
 
-.card-content {
-    padding: 2.5rem;
-    display: flex;
-    flex-direction: column;
-    flex-grow: 1;
+.slide.active .image-container img {
+    transform: scale(1.05); /* Slow zoom in effect (Ken Burns) */
 }
 
-.card-content p.highlight {
-    color: var(--text-primary);
-    margin-top: auto; /* Empuja este texto al final, manteniendo cajas iguales */
-    padding-top: 1rem;
-    border-top: 1px solid var(--border-color);
+.float-effect {
+    animation: float 6s ease-in-out infinite;
 }
 
-/* ==========================================================================
-   SECCIÓN 4: BANNER PARÁSITOS
-   ========================================================================== */
-.banner-section {
-    position: relative;
-    padding: 15vh 5vw;
-    text-align: center;
-    border-top: 1px solid var(--border-color);
-    border-bottom: 1px solid var(--border-color);
+.glow-effect {
+    box-shadow: var(--shadow-glow);
+    border: 1px solid rgba(118, 185, 0, 0.3);
 }
 
-.banner-bg {
-    position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;
+@keyframes float {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-15px); }
+    100% { transform: translateY(0px); }
 }
 
-.banner-bg img {
-    width: 100%; height: 100%; object-fit: cover;
-}
+/* --- Layouts Específicos por Diapositiva --- */
 
-.banner-overlay {
-    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-    background: rgba(0, 0, 0, 0.85); /* Oscurecido fuertemente para legibilidad */
-}
+/* Slide 1: Centro */
+.text-center { text-align: center; max-width: 800px; margin: 0 auto; }
+.text-center .separator { margin: 2rem auto; }
 
-.banner-content {
-    position: relative; z-index: 1; max-width: 800px; margin: 0 auto;
-}
-
-.banner-content h2 { font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 700; margin-bottom: 1rem; }
-.banner-lead { font-size: 1.5rem; color: var(--accent); margin-bottom: 2rem; }
-
-.banner-info {
-    background: var(--surface-color);
-    padding: 2.5rem;
-    border-radius: 20px;
-    border: 1px solid var(--border-color);
-    text-align: left;
-}
-
-.banner-info ul { padding-left: 1.5rem; margin-top: 1rem; color: var(--text-primary); }
-.banner-info li { margin-bottom: 0.5rem; }
-
-/* ==========================================================================
-   SECCIÓN 5: COMPARACIÓN (Tabla de Datos Pro)
-   ========================================================================== */
-.comparison-section {
-    padding: 12vh 0;
-}
-
-.comparison-header {
-    text-align: center;
-    max-width: 800px;
-    margin: 0 auto 5rem auto;
-}
-
-.comparison-grid {
+/* Slide 2: Split Layout */
+.split-layout {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 4rem;
-}
-
-.comp-column {
-    background-color: var(--surface-color);
-    padding: 3rem;
-    border-radius: 20px;
-    border: 1px solid var(--border-color);
-}
-
-.comp-img {
+    align-items: center;
     width: 100%;
-    height: 300px;
-    object-fit: cover;
-    border-radius: 12px;
-    margin-bottom: 2rem;
+    max-width: 1400px;
+}
+.large-text { font-size: 1.5rem; }
+
+/* Slide 3: Tarjeta Superpuesta */
+.card-layout {
+    position: relative;
+    width: 100%;
+    max-width: 1200px;
+    height: 70vh;
+}
+.large-frame { width: 80%; height: 100%; }
+.overlapping-card {
+    position: absolute;
+    bottom: -10%;
+    right: 0;
+    width: 50%;
+    background: rgba(10, 10, 12, 0.85);
 }
 
-.comp-title { font-size: 2rem; margin-bottom: 0.5rem; }
-.comp-def { color: var(--accent); font-weight: 500; margin-bottom: 2rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border-color); }
-
-/* Data List (Especificaciones estilo Apple Spec Sheet) */
-.spec-list {
+/* Slide 4: Asimétrico */
+.asymmetric-layout {
     display: grid;
-    grid-template-columns: 100px 1fr; /* Columna izquierda fija, derecha flexible */
-    row-gap: 1.5rem;
-    column-gap: 1.5rem;
+    grid-template-columns: 3fr 2fr;
+    gap: 3rem;
+    align-items: center;
+    max-width: 1300px;
 }
 
-.spec-list dt {
-    color: var(--text-primary);
+/* Slide 5: Hero */
+.hero-layout {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+    max-width: 1000px;
+}
+.hero-image { height: 40vh; width: 100%; }
+
+/* Slide 6: Collage */
+.collage-layout {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    max-width: 1200px;
+    width: 100%;
+}
+.images-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    height: 40vh;
+}
+
+/* Slide 7: Tipografía Masiva */
+.typography-layout {
+    text-align: center;
+    max-width: 900px;
+}
+.massive-text {
+    font-size: 6rem;
+    background: linear-gradient(to right, var(--text-main), var(--text-muted));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+.vs-text { font-size: 3rem; color: var(--nvidia-green); -webkit-text-fill-color: initial;}
+
+/* Slide 8 & 9: Data Grid (Estilo Dashboard UI) */
+.data-grid-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto 1fr;
+    gap: 2rem;
+    max-width: 1400px;
+    width: 100%;
+    height: 80vh;
+}
+.header-area { grid-column: 1 / -1; text-align: center; }
+.data-cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+}
+.data-card { padding: 1.5rem; }
+.data-card h4 { color: var(--text-main); margin-bottom: 0.5rem; }
+.nvidia-border { border-top: 3px solid var(--nvidia-green); }
+.blue-border { border-top: 3px solid var(--apple-blue); }
+
+.data-grid-layout.mirrored .image-area { order: 1; }
+.data-grid-layout.mirrored .data-cards { order: 2; }
+
+/* Controles UI */
+.controls {
+    position: fixed;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    padding: 0.5rem 1.5rem;
+    border-radius: 50px;
+    border: 1px solid var(--glass-border);
+    z-index: 100;
+}
+
+.control-btn {
+    background: none;
+    border: none;
+    color: var(--text-main);
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.control-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--nvidia-green);
+}
+
+.slide-counter {
+    font-size: 0.9rem;
     font-weight: 600;
-    font-size: 0.95rem;
-    border-top: 1px solid var(--border-color);
-    padding-top: 0.5rem;
+    letter-spacing: 2px;
 }
 
-.spec-list dd {
-    color: var(--text-secondary);
-    font-size: 0.95rem;
-    border-top: 1px solid var(--border-color);
-    padding-top: 0.5rem;
-    line-height: 1.6;
-}
-
-/* ==========================================================================
-   ANIMACIONES Y RESPONSIVE
-   ========================================================================== */
-.fade-in {
+/* Animaciones Staggered de los elementos internos */
+.slide .glass-panel, .slide h2, .slide p, .slide .image-container, .slide .data-card {
     opacity: 0;
-    transform: translateY(30px);
-    transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1), transform 1s cubic-bezier(0.16, 1, 0.3, 1);
-}
-.fade-in.visible {
-    opacity: 1;
-    transform: translateY(0);
+    transform: translateY(20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
 }
 
-@media (max-width: 992px) {
-    .comparison-grid { grid-template-columns: 1fr; gap: 2rem; }
-    .spec-list { grid-template-columns: 1fr; } /* En móvil se apilan las especificaciones */
-    .spec-list dt { border-top: none; padding-top: 1rem; color: var(--accent); }
-    .spec-list dd { border-top: none; padding-top: 0; padding-bottom: 1rem; border-bottom: 1px solid var(--border-color); }
+.slide.active .glass-panel { transition-delay: 0.1s; opacity: 1; transform: translateY(0); }
+.slide.active h2 { transition-delay: 0.2s; opacity: 1; transform: translateY(0); }
+.slide.active p { transition-delay: 0.3s; opacity: 1; transform: translateY(0); }
+.slide.active .image-container { transition-delay: 0.4s; opacity: 1; transform: translateY(0); }
+.slide.active .data-card:nth-child(1) { transition-delay: 0.3s; opacity: 1; transform: translateY(0); }
+.slide.active .data-card:nth-child(2) { transition-delay: 0.4s; opacity: 1; transform: translateY(0); }
+.slide.active .data-card:nth-child(3) { transition-delay: 0.5s; opacity: 1; transform: translateY(0); }
+.slide.active .data-card:nth-child(4) { transition-delay: 0.6s; opacity: 1; transform: translateY(0); }
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    h1 { font-size: 3rem; }
+    h2 { font-size: 2.2rem; }
+    .split-layout, .asymmetric-layout, .data-grid-layout, .data-grid-layout.mirrored {
+        grid-template-columns: 1fr;
+        height: auto;
+    }
+    .overlapping-card { width: 80%; bottom: -20%; right: 10%; }
+    .slide { overflow-y: auto; padding: 10vw 6vw; display: block; }
+    .image-area { height: 40vh; }
+    .data-cards { grid-template-columns: 1fr; }
 }
 
 @media (max-width: 768px) {
-    .bento-grid { grid-template-columns: 1fr; }
-    .card-img-wrapper { height: 200px; }
-    .comp-column { padding: 1.5rem; }
-    .banner-info { padding: 1.5rem; }
+    h1 { font-size: 2.2rem; }
+    .massive-text { font-size: 3rem; }
+    .images-grid { grid-template-columns: 1fr; height: auto; }
+    .glass-panel, .glass-card { padding: 1.5rem; }
+    .overlapping-card { position: relative; width: 100%; bottom: 0; right: 0; margin-top: -2rem; }
+    .large-frame { width: 100%; }
 }
