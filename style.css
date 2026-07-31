@@ -182,7 +182,7 @@ p {
     display: flex;
     align-items: center;
     justify-content: center;
-    background: rgba(0, 0, 0, 0.2); /* Fondo por si no carga la imagen */
+    background: rgba(0, 0, 0, 0.2); 
 }
 
 .decor-img {
@@ -226,7 +226,7 @@ p {
 .icon-large { font-size: 4rem; color: var(--azul-turquesa); margin-bottom: 1rem; display: inline-block; }
 .divider { border: 0; border-top: 1px solid var(--glass-border); margin: 1.5rem 0; }
 
-/* Animaciones de Entrada (Solo cuando la slide está activa) */
+/* Animaciones de Entrada */
 .slide.active .slide-up {
     animation: slideUp 0.8s forwards;
     opacity: 0;
