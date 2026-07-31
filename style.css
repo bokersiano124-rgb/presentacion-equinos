@@ -20,10 +20,9 @@
 body {
     background-color: var(--bg-color);
     color: var(--text-primary);
-    overflow: hidden; /* Oculta el scroll global */
+    overflow: hidden;
 }
 
-/* Contenedor principal con Scroll Snap para efecto diapositiva */
 .presentation-container {
     height: 100vh;
     overflow-y: scroll;
@@ -37,225 +36,172 @@ body {
     display: none;
 }
 
-/* Estructura de cada diapositiva */
 .slide {
-    height: 100vh;
+    min-height: 100vh; /* Cambiado para que no corte el contenido */
     width: 100vw;
     scroll-snap-align: start;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 5%;
+    padding: 2rem 5%; /* Padding reducido */
     position: relative;
-    overflow: hidden;
 }
 
 .content-wrapper {
-    max-width: 1400px;
+    max-width: 1100px; /* Contenedor más pequeño */
     width: 100%;
     z-index: 2;
 }
 
-/* Efectos visuales de lujo (Glassmorphism) */
+/* CUADROS MÁS PEQUEÑOS */
 .glass-panel {
     background: var(--glass-bg);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
     border: 1px solid var(--glass-border);
-    border-radius: 24px;
-    padding: 4rem;
-    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    border-radius: 16px; /* Bordes más sutiles */
+    padding: 2rem; /* REDUCIDO A LA MITAD */
+    box-shadow: 0 15px 35px -10px rgba(0, 0, 0, 0.5);
 }
 
-/* Tipografía y Jerarquía */
+/* TIPOGRAFÍA MÁS PEQUEÑA */
 .gradient-text {
-    font-size: 4rem;
+    font-size: 2.5rem; /* REDUCIDO */
     font-weight: 800;
     background: linear-gradient(135deg, #FFF 0%, var(--text-secondary) 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    margin-bottom: 2rem;
-    letter-spacing: -2px;
+    margin-bottom: 1rem;
+    letter-spacing: -1px;
 }
 
 h2 {
-    font-size: 2rem;
+    font-size: 1.4rem; /* REDUCIDO */
     font-weight: 600;
     color: var(--nvidia-green);
-    margin-bottom: 1rem;
-}
-
-h3 {
-    font-size: 1.2rem;
-    font-weight: 600;
-    color: var(--emerald-green);
     margin-bottom: 0.5rem;
 }
 
+h3 {
+    font-size: 1.1rem; /* REDUCIDO */
+    font-weight: 600;
+    color: var(--emerald-green);
+    margin-bottom: 0.3rem;
+}
+
 p {
-    font-size: 1.2rem;
-    line-height: 1.8;
+    font-size: 0.95rem; /* REDUCIDO */
+    line-height: 1.5;
     color: var(--text-secondary);
     font-weight: 300;
 }
 
-.large-text {
-    font-size: 1.5rem;
-    color: var(--text-primary);
-}
-
-.xl-text {
-    font-size: 2.2rem;
-    line-height: 1.4;
-    font-weight: 400;
-}
-
-.subtle-text {
-    color: var(--text-secondary);
-}
-
+.large-text { font-size: 1.1rem; color: var(--text-primary); }
+.xl-text { font-size: 1.4rem; line-height: 1.4; font-weight: 400; }
+.subtle-text { color: var(--text-secondary); }
 .text-center { text-align: center; }
-.mb-large { margin-bottom: 3rem; }
-.mt-large { margin-top: 3rem; }
+.mb-large { margin-bottom: 1.5rem; } /* Margen reducido */
+.mt-large { margin-top: 1.5rem; }
 
-/* Separadores decorativos */
 .divider {
     height: 1px;
-    width: 100px;
+    width: 80px;
     background: linear-gradient(90deg, transparent, var(--nvidia-green), transparent);
-    margin: 3rem auto;
+    margin: 1.5rem auto;
 }
 
 .section-badge {
     display: inline-block;
-    padding: 0.5rem 1.5rem;
+    padding: 0.4rem 1.2rem;
     background: rgba(118, 185, 0, 0.1);
     border: 1px solid rgba(118, 185, 0, 0.3);
     border-radius: 50px;
-    font-size: 1rem;
-    letter-spacing: 2px;
+    font-size: 0.85rem;
+    letter-spacing: 1px;
     text-transform: uppercase;
-    margin-bottom: 2rem;
+    margin-bottom: 1rem;
 }
-.center-badge { margin: 0 auto 2rem auto; display: block; width: fit-content; }
+.center-badge { margin: 0 auto 1rem auto; display: block; width: fit-content; }
 
-/* Layouts (Grid y Flexbox) */
-.text-block { margin-bottom: 2.5rem; }
+.text-block { margin-bottom: 1.5rem; }
 .text-block:last-child { margin-bottom: 0; }
 
 .split-layout {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 4rem;
+    gap: 2rem; /* ESPACIO REDUCIDO */
     align-items: center;
 }
 
-.slide-split.reverse .split-layout {
-    direction: rtl;
-}
-.slide-split.reverse .split-layout > * {
-    direction: ltr;
-}
+.slide-split.reverse .split-layout { direction: rtl; }
+.slide-split.reverse .split-layout > * { direction: ltr; }
 
 .image-grid-2 {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 2rem;
+    gap: 1rem;
 }
 
-/* Tarjetas */
+/* TARJETAS MÁS PEQUEÑAS */
 .card-layout {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 4rem;
+    gap: 2rem;
     align-items: center;
 }
 
-.card-layout.reverse-layout {
-    direction: rtl;
-}
-.card-layout.reverse-layout > * {
-    direction: ltr;
-}
+.card-layout.reverse-layout { direction: rtl; }
+.card-layout.reverse-layout > * { direction: ltr; }
 
 .info-cards {
     display: grid;
     grid-template-columns: 1fr;
-    gap: 1.5rem;
+    gap: 0.8rem; /* DISTANCIA REDUCIDA ENTRE TARJETAS */
 }
 
 .card {
     background: var(--glass-bg);
     border: 1px solid var(--glass-border);
-    border-radius: 16px;
-    padding: 2rem;
-    transition: all 0.4s ease;
+    border-radius: 12px;
+    padding: 1.2rem; /* RECUADRO MÁS PEQUEÑO */
+    transition: all 0.3s ease;
 }
 
 .card:hover {
     background: var(--card-hover);
-    transform: translateY(-5px);
-    box-shadow: 0 10px 30px rgba(118, 185, 0, 0.1);
+    transform: translateY(-3px);
     border-color: rgba(118, 185, 0, 0.3);
 }
 
-/* Imágenes Premium */
+/* IMÁGENES MÁS PEQUEÑAS PARA QUE QUEPAN EN LA PANTALLA */
 .premium-image {
     width: 100%;
     height: 100%;
-    max-height: 70vh;
+    max-height: 45vh; /* REDUCIDO */
     object-fit: cover;
-    border-radius: 20px;
-    box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.8);
-    transition: transform 0.7s ease;
+    border-radius: 12px;
+    box-shadow: 0 15px 30px -10px rgba(0, 0, 0, 0.8);
+    transition: transform 0.5s ease;
     border: 1px solid var(--glass-border);
 }
 
-.premium-image:hover {
-    transform: scale(1.02);
-}
+.premium-image:hover { transform: scale(1.02); }
+.wide-image { max-height: 35vh; }
+.tall-image { max-height: 50vh; }
 
-.wide-image {
-    max-height: 50vh;
-    object-fit: cover;
-}
+/* Animaciones */
+.fade-up { opacity: 0; transform: translateY(30px); transition: all 0.8s ease; }
+.fade-left { opacity: 0; transform: translateX(-30px); transition: all 0.8s ease; }
+.fade-right { opacity: 0; transform: translateX(30px); transition: all 0.8s ease; }
+.in-view { opacity: 1; transform: translate(0); }
+.delay-1 { transition-delay: 0.1s; }
+.delay-2 { transition-delay: 0.2s; }
 
-.tall-image {
-    max-height: 80vh;
-}
-
-/* Animaciones y Transiciones (Estilo Keynote) */
-.fade-up { opacity: 0; transform: translateY(50px); transition: all 1.2s cubic-bezier(0.16, 1, 0.3, 1); }
-.fade-left { opacity: 0; transform: translateX(-50px); transition: all 1.2s cubic-bezier(0.16, 1, 0.3, 1); }
-.fade-right { opacity: 0; transform: translateX(50px); transition: all 1.2s cubic-bezier(0.16, 1, 0.3, 1); }
-
-.in-view {
-    opacity: 1;
-    transform: translate(0);
-}
-
-.delay-1 { transition-delay: 0.2s; }
-.delay-2 { transition-delay: 0.4s; }
-
-/* Responsive Design */
-@media (max-width: 1024px) {
-    .split-layout, .card-layout {
-        grid-template-columns: 1fr;
-        gap: 2rem;
-    }
-    .slide-split.reverse .split-layout, .card-layout.reverse-layout {
-        direction: ltr;
-    }
-    .gradient-text { font-size: 3rem; }
-    .glass-panel { padding: 2rem; }
-    .premium-image { max-height: 40vh; }
-    .slide { height: auto; min-height: 100vh; padding: 10% 5%; }
-}
-
-@media (max-width: 768px) {
-    .image-grid-2 { grid-template-columns: 1fr; }
-    .gradient-text { font-size: 2.5rem; }
-    p, .large-text { font-size: 1rem; }
-    .xl-text { font-size: 1.5rem; }
-    .card { padding: 1.5rem; }
+@media (max-width: 900px) {
+    .split-layout, .card-layout { grid-template-columns: 1fr; gap: 1.5rem; }
+    .slide-split.reverse .split-layout, .card-layout.reverse-layout { direction: ltr; }
+    .gradient-text { font-size: 2rem; }
+    .glass-panel { padding: 1.5rem; }
+    .premium-image { max-height: 35vh; }
+    .slide { height: auto; min-height: 100vh; padding: 5% 5%; }
 }
