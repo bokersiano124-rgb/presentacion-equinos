@@ -1,0 +1,318 @@
+/* Importar fuente moderna y limpia */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
+/* Variables y Paleta de Colores */
+:root {
+    --verde-esmeralda: #009966;
+    --verde-oliva: #6b8e23;
+    --azul-oscuro: #0a192f;
+    --azul-turquesa: #00d2d3;
+    --blanco: #ffffff;
+    --gris-claro: #f0f4f8;
+    
+    /* Variables de Glassmorphism */
+    --glass-bg: rgba(255, 255, 255, 0.08);
+    --glass-border: rgba(255, 255, 255, 0.2);
+    --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+}
+
+/* Reset y Base */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    background: linear-gradient(-45deg, var(--azul-oscuro), var(--verde-oliva), var(--verde-esmeralda), var(--azul-oscuro));
+    background-size: 400% 400%;
+    animation: gradientBG 15s ease infinite;
+    color: var(--blanco);
+    overflow: hidden; /* Previene scroll global */
+    height: 100vh;
+    width: 100vw;
+}
+
+@keyframes gradientBG {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* Contenedor Principal */
+.presentation-container {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+/* Diapositivas */
+.slide {
+    position: absolute;
+    width: 90%;
+    max-width: 1200px;
+    height: 85vh;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.8s ease-in-out, transform 0.8s ease;
+    transform: scale(0.95);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    z-index: 1;
+}
+
+.slide.active {
+    opacity: 1;
+    visibility: visible;
+    transform: scale(1);
+    z-index: 10;
+}
+
+/* Soporte para pantallas pequeñas (Scroll interno si el contenido excede la altura) */
+.slide.overflow-auto {
+    justify-content: flex-start;
+    padding: 2rem 0;
+    overflow-y: auto;
+}
+
+/* Scrollbar personalizado para diapositivas con mucho contenido */
+.slide::-webkit-scrollbar { width: 6px; }
+.slide::-webkit-scrollbar-track { background: transparent; }
+.slide::-webkit-scrollbar-thumb { background: var(--azul-turquesa); border-radius: 10px; }
+
+/* Tipografía Responsiva */
+h1 {
+    font-size: clamp(2rem, 5vw, 4rem);
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 0.5rem;
+    color: var(--blanco);
+}
+
+.slide-title {
+    font-size: clamp(1.8rem, 4vw, 3rem);
+    color: var(--azul-turquesa);
+    margin-bottom: 2rem;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    border-bottom: 2px solid var(--azul-turquesa);
+    padding-bottom: 0.5rem;
+    align-self: center;
+}
+
+h3 {
+    font-size: clamp(1.2rem, 2.5vw, 1.8rem);
+    color: var(--azul-turquesa);
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+p {
+    font-size: clamp(1rem, 1.5vw, 1.25rem);
+    line-height: 1.6;
+    color: var(--gris-claro);
+}
+
+.subtitle {
+    font-size: clamp(1rem, 2vw, 1.5rem);
+    color: var(--azul-turquesa);
+    text-align: center;
+    font-weight: 300;
+}
+
+/* Glassmorphism Cards */
+.glass-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    padding: clamp(1.5rem, 4vw, 3rem);
+    box-shadow: var(--glass-shadow);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.glass-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 40px rgba(0,0,0,0.4);
+}
+
+/* Sistemas de Grillas Responsivas */
+.grid-2 {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+}
+
+.grid-3 {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+}
+
+.grid-1 {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+}
+
+@media (min-width: 768px) {
+    .grid-2 { grid-template-columns: repeat(2, 1fr); }
+    .grid-3 { grid-template-columns: repeat(3, 1fr); }
+    .grid-1 { grid-template-columns: repeat(2, 1fr); } /* Para la galería de 2 imágenes */
+}
+
+/* Imágenes decorativas */
+.img-wrapper {
+    overflow: hidden;
+    border-radius: 15px;
+    border: 1px solid var(--glass-border);
+    box-shadow: var(--glass-shadow);
+    height: 100%;
+    min-height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.2); /* Fondo por si no carga la imagen */
+}
+
+.decor-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.img-wrapper:hover .decor-img {
+    transform: scale(1.05);
+}
+
+/* Listas con iconos */
+.info-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.info-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+}
+
+.info-list i {
+    font-size: 1.5rem;
+    color: var(--azul-turquesa);
+    margin-top: 0.2rem;
+}
+
+/* Utilidades */
+.center-content { align-items: center; text-align: center; }
+.align-center { align-items: center; }
+.max-w-800 { max-width: 800px; margin: 0 auto; }
+.mx-auto { margin-left: auto; margin-right: auto; }
+.mb-2 { margin-bottom: 2rem; }
+.mt-2 { margin-top: 2rem; }
+.icon-large { font-size: 4rem; color: var(--azul-turquesa); margin-bottom: 1rem; display: inline-block; }
+.divider { border: 0; border-top: 1px solid var(--glass-border); margin: 1.5rem 0; }
+
+/* Animaciones de Entrada (Solo cuando la slide está activa) */
+.slide.active .slide-up {
+    animation: slideUp 0.8s forwards;
+    opacity: 0;
+}
+.slide.active .zoom-in {
+    animation: zoomIn 0.8s forwards;
+    opacity: 0;
+}
+
+.delay-1 { animation-delay: 0.3s !important; }
+.delay-2 { animation-delay: 0.6s !important; }
+
+@keyframes slideUp {
+    0% { transform: translateY(40px); opacity: 0; }
+    100% { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes zoomIn {
+    0% { transform: scale(0.8); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+/* Controles de Navegación UI */
+.nav-controls {
+    position: absolute;
+    bottom: 20px;
+    width: 90%;
+    max-width: 800px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: var(--glass-bg);
+    backdrop-filter: blur(10px);
+    padding: 10px 20px;
+    border-radius: 30px;
+    border: 1px solid var(--glass-border);
+    z-index: 100;
+}
+
+.nav-btn {
+    background: transparent;
+    border: none;
+    color: var(--blanco);
+    font-size: 2rem;
+    cursor: pointer;
+    transition: color 0.3s ease, transform 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.nav-btn:hover:not(:disabled) {
+    color: var(--azul-turquesa);
+    transform: scale(1.1);
+}
+
+.nav-btn:disabled {
+    color: rgba(255,255,255,0.2);
+    cursor: not-allowed;
+}
+
+.progress-container {
+    flex-grow: 1;
+    height: 4px;
+    background: rgba(255,255,255,0.1);
+    margin: 0 20px;
+    border-radius: 2px;
+    overflow: hidden;
+}
+
+.progress-bar {
+    height: 100%;
+    background: var(--azul-turquesa);
+    width: 0%;
+    transition: width 0.4s ease;
+}
+
+.slide-counter {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--azul-turquesa);
+}
+
+/* Responsividad extra para móviles muy pequeños */
+@media (max-width: 480px) {
+    .nav-controls { bottom: 10px; width: 95%; padding: 5px 10px; }
+    .glass-card { padding: 1.2rem; }
+    .slide { height: 88vh; }
+}
