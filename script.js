@@ -1,45 +1,95 @@
 /**
- * Lógica para las animaciones suaves (Scroll Reveal)
- * Inspirado en las páginas de productos premium donde 
- * el contenido aparece elegantemente a medida que el usuario hace scroll.
+ * LÓGICA DE INTERACCIÓN PREMIUM (APPLE/NVIDIA STYLE)
+ * - Efecto 3D Tilt Sincronizado.
+ * - Brillo de Ratón (Glow).
+ * - Animaciones Reveal atadas al Scroll Snap.
  */
-
 document.addEventListener('DOMContentLoaded', () => {
-    // Seleccionar todos los elementos con la clase .reveal
-    const reveals = document.querySelectorAll('.reveal');
+    
+    // 1. Efecto Cursor Global (Sigue al ratón)
+    const cursorGlow = document.querySelector('.cursor-glow');
+    let isDesktop = window.matchMedia("(pointer: fine)").matches;
 
-    // Configuración del Intersection Observer para el rendimiento fluido
-    const revealOptions = {
-        threshold: 0.15, // Ejecuta la animación cuando el 15% del elemento es visible
-        rootMargin: "0px 0px -50px 0px"
+    if (isDesktop) {
+        document.addEventListener('mousemove', (e) => {
+            cursorGlow.style.left = `${e.clientX}px`;
+            cursorGlow.style.top = `${e.clientY}px`;
+            
+            // Ocultar al salir de la pantalla
+            if(e.clientX <= 0 || e.clientY <= 0 || e.clientX >= window.innerWidth || e.clientY >= window.innerHeight) {
+                cursorGlow.style.opacity = 0;
+            } else {
+                cursorGlow.style.opacity = 1;
+            }
+        });
+    } else {
+        cursorGlow.style.display = 'none';
+    }
+
+    // 2. Efecto 3D Card Dinámico y Glow Interno (Para mantener la simetría viva)
+    const cards = document.querySelectorAll('.3d-card');
+    
+    cards.forEach(card => {
+        if (!isDesktop) return; // En móvil se desactiva por rendimiento
+
+        card.addEventListener('mousemove', (e) => {
+            const rect = card.getBoundingClientRect();
+            const x = e.clientX - rect.left; // Posición X dentro de la tarjeta
+            const y = e.clientY - rect.top;  // Posición Y dentro de la tarjeta
+            
+            // Actualizar variables CSS para el Glow Interno
+            card.style.setProperty('--mouse-x', `${x}px`);
+            card.style.setProperty('--mouse-y', `${y}px`);
+
+            // Algoritmo de Tilt 3D ultra suave
+            const centerX = rect.width / 2;
+            const centerY = rect.height / 2;
+            
+            // Limitar la rotación para que no rompa la caja visualmente (Max 5 grados)
+            const rotateX = ((y - centerY) / centerY) * -5; 
+            const rotateY = ((x - centerX) / centerX) * 5;
+
+            card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
+        });
+
+        card.addEventListener('mouseleave', () => {
+            // Restaurar a la posición simétrica original
+            card.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)`;
+            card.style.transition = 'transform 0.5s cubic-bezier(0.16, 1, 0.3, 1)';
+            setTimeout(() => { card.style.transition = 'transform 0.1s'; }, 500);
+        });
+    });
+
+    // 3. Sistema de Reveal atado al Scroll Snap
+    // Como usamos scroll-snap, el Intersection Observer dispara animaciones de entrada.
+    const container = document.querySelector('.snap-container');
+    const slides = document.querySelectorAll('.snap-slide');
+    
+    const observerOptions = {
+        root: container,
+        threshold: 0.6 // Dispara cuando el 60% de la slide es visible (snap asegurado)
     };
 
-    const revealOnScroll = new IntersectionObserver(function(entries, observer) {
+    const slideObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
-            if (!entry.isIntersecting) {
-                return;
+            const animatableElements = entry.target.querySelectorAll('.transform-up');
+            
+            if (entry.isIntersecting) {
+                // Animar elementos dentro del slide activo
+                animatableElements.forEach(el => el.classList.add('active'));
             } else {
-                // Añade la clase active para disparar el CSS (Fade In & Slide Up)
-                entry.target.classList.add('active');
-                
-                // Dejar de observar el elemento una vez animado para mejor rendimiento
-                observer.unobserve(entry.target);
+                // (Opcional) Retirar clase para que se vuelva a animar al regresar
+                animatableElements.forEach(el => el.classList.remove('active'));
             }
         });
-    }, revealOptions);
+    }, observerOptions);
 
-    // Aplicar el observador a cada elemento .reveal
-    reveals.forEach(reveal => {
-        revealOnScroll.observe(reveal);
-    });
+    slides.forEach(slide => slideObserver.observe(slide));
     
-    // Activar inmediatamente los elementos que ya están en el viewport al cargar la página
+    // Activar primera diapositiva inmediatamente
     setTimeout(() => {
-        reveals.forEach(reveal => {
-            const rect = reveal.getBoundingClientRect();
-            if(rect.top < window.innerHeight) {
-                reveal.classList.add('active');
-            }
-        });
-    }, 100);
+        const firstElements = slides[0].querySelectorAll('.transform-up');
+        firstElements.forEach(el => el.classList.add('active'));
+    }, 200);
+
 });
