@@ -1,168 +1,261 @@
-/* ==========================================================================
-   Configuración Base
-   ========================================================================== */
 :root {
-    --bg-main: #000000;
-    --bg-alt: #0d0d0f;
-    --text-main: #f5f5f7;
-    --text-muted: #a1a1a6;
-    --nvidia-green: #76b900;
-    --apple-blue: #2997ff;
-    
-    --card-bg: rgba(255, 255, 255, 0.04);
-    --card-border: rgba(255, 255, 255, 0.08);
-    
-    --font-primary: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    --bg-color: #050505;
+    --text-primary: #F5F5F7;
+    --text-secondary: #86868B;
+    --nvidia-green: #76B900;
+    --emerald-green: #10B981;
+    --deep-blue: #0A192F;
+    --glass-bg: rgba(255, 255, 255, 0.03);
+    --glass-border: rgba(255, 255, 255, 0.08);
+    --card-hover: rgba(255, 255, 255, 0.06);
 }
 
-* { margin: 0; padding: 0; box-sizing: border-box; }
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+}
 
 body {
-    font-family: var(--font-primary);
-    background-color: var(--bg-main);
-    color: var(--text-main);
-    line-height: 1.5;
-    -webkit-font-smoothing: antialiased;
+    background-color: var(--bg-color);
+    color: var(--text-primary);
+    overflow: hidden; /* Oculta el scroll global */
 }
 
-/* LA SOLUCIÓN: Esta clase oculta los textos de las referencias */
-.hide-cite {
-    display: none !important;
+/* Contenedor principal con Scroll Snap para efecto diapositiva */
+.presentation-container {
+    height: 100vh;
+    overflow-y: scroll;
+    scroll-snap-type: y mandatory;
+    scroll-behavior: smooth;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
 }
 
-/* ==========================================================================
-   Estructura y Simetría
-   ========================================================================== */
+.presentation-container::-webkit-scrollbar {
+    display: none;
+}
+
+/* Estructura de cada diapositiva */
 .slide {
-    min-height: 100vh;
+    height: 100vh;
+    width: 100vw;
+    scroll-snap-align: start;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 6rem 2rem;
+    padding: 5%;
     position: relative;
+    overflow: hidden;
 }
 
-.bg-alt { background-color: var(--bg-alt); }
-
-.container {
+.content-wrapper {
+    max-width: 1400px;
     width: 100%;
-    max-width: 1200px;
-    margin: 0 auto;
+    z-index: 2;
 }
 
-.grid-50-50 {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 6rem; /* Mayor espacio en blanco entre texto e imagen */
-    align-items: center;
-}
-
-/* ==========================================================================
-   Tipografía y Tarjetas
-   ========================================================================== */
-.accent-title { color: var(--nvidia-green); font-size: 1rem; text-transform: uppercase; letter-spacing: 0.15em; margin-bottom: 1rem; }
-.main-title { font-size: clamp(3rem, 5vw, 5rem); font-weight: 700; letter-spacing: -0.02em; margin-bottom: 2rem; color: #ffffff; }
-.section-title { font-size: clamp(2rem, 3.5vw, 3.5rem); font-weight: 700; margin-bottom: 1.5rem; }
-.card-title { font-size: 1.5rem; font-weight: 600; color: #ffffff; }
-.text-body { font-size: 1.15rem; color: var(--text-muted); line-height: 1.7; }
-.text-white { color: #ffffff !important; }
-
-.text-card {
-    background: var(--card-bg);
-    border: 1px solid var(--card-border);
-    border-radius: 20px;
-    padding: 2.5rem;
+/* Efectos visuales de lujo (Glassmorphism) */
+.glass-panel {
+    background: var(--glass-bg);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
-    margin: 0 auto;
+    border: 1px solid var(--glass-border);
+    border-radius: 24px;
+    padding: 4rem;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
 }
 
-.border-nvidia { border-left: 4px solid var(--nvidia-green); }
-.border-apple { border-left: 4px solid var(--apple-blue); }
-.border-top-nvidia { border-top: 4px solid var(--nvidia-green); }
-.border-top-apple { border-top: 4px solid var(--apple-blue); }
+/* Tipografía y Jerarquía */
+.gradient-text {
+    font-size: 4rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, #FFF 0%, var(--text-secondary) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 2rem;
+    letter-spacing: -2px;
+}
 
-.divider { height: 1px; background: var(--card-border); margin: 1.5rem 0; width: 100%; }
+h2 {
+    font-size: 2rem;
+    font-weight: 600;
+    color: var(--nvidia-green);
+    margin-bottom: 1rem;
+}
 
-.clean-list { list-style: none; }
-.clean-list li { font-size: 1rem; color: var(--text-muted); margin-bottom: 1.2rem; line-height: 1.6; }
-.clean-list li strong { color: #ffffff; }
+h3 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--emerald-green);
+    margin-bottom: 0.5rem;
+}
 
-/* ==========================================================================
-   Control Estricto de Imágenes (Más pequeñas y elegantes)
-   ========================================================================== */
-.image-wrapper {
-    display: flex;
-    justify-content: center;
+p {
+    font-size: 1.2rem;
+    line-height: 1.8;
+    color: var(--text-secondary);
+    font-weight: 300;
+}
+
+.large-text {
+    font-size: 1.5rem;
+    color: var(--text-primary);
+}
+
+.xl-text {
+    font-size: 2.2rem;
+    line-height: 1.4;
+    font-weight: 400;
+}
+
+.subtle-text {
+    color: var(--text-secondary);
+}
+
+.text-center { text-align: center; }
+.mb-large { margin-bottom: 3rem; }
+.mt-large { margin-top: 3rem; }
+
+/* Separadores decorativos */
+.divider {
+    height: 1px;
+    width: 100px;
+    background: linear-gradient(90deg, transparent, var(--nvidia-green), transparent);
+    margin: 3rem auto;
+}
+
+.section-badge {
+    display: inline-block;
+    padding: 0.5rem 1.5rem;
+    background: rgba(118, 185, 0, 0.1);
+    border: 1px solid rgba(118, 185, 0, 0.3);
+    border-radius: 50px;
+    font-size: 1rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 2rem;
+}
+.center-badge { margin: 0 auto 2rem auto; display: block; width: fit-content; }
+
+/* Layouts (Grid y Flexbox) */
+.text-block { margin-bottom: 2.5rem; }
+.text-block:last-child { margin-bottom: 0; }
+
+.split-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
     align-items: center;
 }
 
-.glass-image {
+.slide-split.reverse .split-layout {
+    direction: rtl;
+}
+.slide-split.reverse .split-layout > * {
+    direction: ltr;
+}
+
+.image-grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+}
+
+/* Tarjetas */
+.card-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+}
+
+.card-layout.reverse-layout {
+    direction: rtl;
+}
+.card-layout.reverse-layout > * {
+    direction: ltr;
+}
+
+.info-cards {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+}
+
+.card {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    padding: 2rem;
+    transition: all 0.4s ease;
+}
+
+.card:hover {
+    background: var(--card-hover);
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(118, 185, 0, 0.1);
+    border-color: rgba(118, 185, 0, 0.3);
+}
+
+/* Imágenes Premium */
+.premium-image {
     width: 100%;
-    border-radius: 20px;
-    border: 1px solid var(--card-border);
-    box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+    height: 100%;
+    max-height: 70vh;
     object-fit: cover;
-    margin: 0 auto;
+    border-radius: 20px;
+    box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.8);
+    transition: transform 0.7s ease;
+    border: 1px solid var(--glass-border);
 }
 
-/* Tamaños máximos para evitar que ocupen toda la pantalla */
-.square-image {
-    max-width: 400px;
-    max-height: 400px;
-    aspect-ratio: 1 / 1;
+.premium-image:hover {
+    transform: scale(1.02);
 }
 
-.image-sm {
-    max-width: 350px;
-    max-height: 250px;
+.wide-image {
+    max-height: 50vh;
+    object-fit: cover;
 }
 
-.image-md {
-    max-width: 500px;
-    max-height: 350px;
+.tall-image {
+    max-height: 80vh;
 }
 
-.header-img {
-    max-width: 600px;
-    max-height: 220px;
+/* Animaciones y Transiciones (Estilo Keynote) */
+.fade-up { opacity: 0; transform: translateY(50px); transition: all 1.2s cubic-bezier(0.16, 1, 0.3, 1); }
+.fade-left { opacity: 0; transform: translateX(-50px); transition: all 1.2s cubic-bezier(0.16, 1, 0.3, 1); }
+.fade-right { opacity: 0; transform: translateX(50px); transition: all 1.2s cubic-bezier(0.16, 1, 0.3, 1); }
+
+.in-view {
+    opacity: 1;
+    transform: translate(0);
 }
 
-/* Límites de ancho de texto */
-.max-w-700 { max-width: 700px; }
-.max-w-800 { max-width: 800px; }
-
-/* ==========================================================================
-   Fondo y Transparencia
-   ========================================================================== */
-.bg-image-section { position: relative; }
-.bg-image { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-size: cover; background-position: center; z-index: 1; }
-.overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.75); z-index: 2; }
-.bg-image-section .container { z-index: 3; position: relative; }
-.translucent { background: rgba(0,0,0,0.4); border-color: rgba(255,255,255,0.1); }
-
-/* ==========================================================================
-   Utilidades y Animaciones
-   ========================================================================== */
-.text-center { text-align: center; }
-.text-left { text-align: left; }
-.mx-auto { margin-left: auto; margin-right: auto; }
-.mt-2 { margin-top: 1rem; }
-.mt-3 { margin-top: 2rem; }
-.mt-4 { margin-top: 3rem; }
-.mb-4 { margin-bottom: 3rem; }
-.my-3 { margin-top: 2rem; margin-bottom: 2rem; }
-
-.reveal { opacity: 1; transform: translateY(0); transition: opacity 1s cubic-bezier(0.25, 1, 0.5, 1), transform 1s cubic-bezier(0.25, 1, 0.5, 1); }
-.reveal.js-hidden { opacity: 0; transform: translateY(40px); }
 .delay-1 { transition-delay: 0.2s; }
 .delay-2 { transition-delay: 0.4s; }
 
-/* ==========================================================================
-   Responsive
-   ========================================================================== */
-@media (max-width: 900px) {
-    .grid-50-50 { grid-template-columns: 1fr; gap: 3rem; }
-    .slide { padding: 4rem 1.5rem; }
-    .square-image, .image-sm, .image-md, .header-img { max-width: 100%; height: auto; aspect-ratio: auto; }
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .split-layout, .card-layout {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+    .slide-split.reverse .split-layout, .card-layout.reverse-layout {
+        direction: ltr;
+    }
+    .gradient-text { font-size: 3rem; }
+    .glass-panel { padding: 2rem; }
+    .premium-image { max-height: 40vh; }
+    .slide { height: auto; min-height: 100vh; padding: 10% 5%; }
+}
+
+@media (max-width: 768px) {
+    .image-grid-2 { grid-template-columns: 1fr; }
+    .gradient-text { font-size: 2.5rem; }
+    p, .large-text { font-size: 1rem; }
+    .xl-text { font-size: 1.5rem; }
+    .card { padding: 1.5rem; }
 }
