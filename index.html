@@ -2,163 +2,388 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <!-- Esta es la etiqueta que soluciona el bloqueo de la imagen -->
-    <meta name="referrer" content="no-referrer">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Enfermedades de la Piel en Equinos</title>
-    <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.15);
+            --text-color: #f0f0f0;
+            --accent-color: #8ab4f8;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #121212 0%, #1e1e2f 100%);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        /* Contenedor Principal */
+        .presentation-container {
+            width: 90%;
+            max-width: 1200px;
+            height: 80vh;
+            position: relative;
+        }
+
+        /* Diapositivas */
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.8s ease-in-out, transform 0.8s ease;
+            transform: scale(0.95);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .slide.active {
+            opacity: 1;
+            visibility: visible;
+            transform: scale(1);
+        }
+
+        /* Estilo Glassmorphism */
+        .glass-panel {
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 3rem;
+            width: 100%;
+            height: 100%;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+            
+            /* Simetría: Grid de 2 columnas iguales */
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        /* Textos */
+        .slide-content {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            height: 100%;
+            padding-right: 1rem;
+        }
+
+        h1, h2 {
+            color: var(--accent-color);
+            margin-bottom: 1.5rem;
+            font-weight: 300;
+            letter-spacing: 1px;
+            line-height: 1.2;
+        }
+
+        h1 { font-size: 2.5rem; }
+        h2 { font-size: 2rem; }
+
+        p, li {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+            color: #cccccc;
+        }
+
+        ul {
+            padding-left: 1.5rem;
+        }
+
+        /* Imágenes con tratamiento visual premium */
+        .slide-image-container {
+            height: 100%;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 16px;
+            overflow: hidden;
+            position: relative;
+            background: rgba(0,0,0,0.2); /* Fondo sutil por si la imagen tarda en cargar */
+        }
+
+        .slide-image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Mantiene la simetría sin deformar */
+            border-radius: 16px;
+            transition: transform 0.6s ease;
+            box-shadow: inset 0 0 20px rgba(0,0,0,0.5);
+        }
+
+        .slide-image-container:hover img {
+            transform: scale(1.03); /* Efecto hover elegante */
+        }
+
+        /* Degradado discreto sobre la imagen para dar profundidad */
+        .slide-image-container::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 16px;
+            box-shadow: inset 0 0 0 1px rgba(255,255,255,0.1);
+            pointer-events: none;
+        }
+
+        /* Controles de Navegación */
+        .controls {
+            position: absolute;
+            bottom: -60px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        button {
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            outline: none;
+        }
+
+        button:hover {
+            background: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        .indicators {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 8px;
+            z-index: 10;
+        }
+
+        .dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.2);
+            transition: background 0.3s ease;
+        }
+
+        .dot.active {
+            background: var(--accent-color);
+        }
+
+        /* Responsive para pantallas pequeñas */
+        @media (max-width: 900px) {
+            .glass-panel {
+                grid-template-columns: 1fr;
+                grid-template-rows: auto 1fr;
+                padding: 2rem;
+                gap: 1.5rem;
+                overflow-y: auto;
+            }
+            .slide-image-container {
+                height: 250px;
+            }
+        }
+    </style>
 </head>
 <body>
-    <main class="presentation-container">
+
+    <div class="presentation-container">
+        
         <!-- Diapositiva 1: Introducción -->
-        <section class="slide slide-intro">
-            <div class="content-wrapper text-center glass-panel fade-up">
-                <h1 class="gradient-text">Introducción</h1>
-                <div class="text-block">
-                    <h2>Importancia:</h2>
-                    <p>La piel de los equinos es el órgano más grande del cuerpo. Funciona como una barrera de protección contra el entorno ayuda a controlar la temperatura corporal al sudar y funciona como un espejo de la salud interna del animal.</p>
+        <div class="slide active">
+            <div class="glass-panel">
+                <div class="slide-content">
+                    <h1>Introducción a la Piel Equina</h1>
+                    <p><strong>Importancia:</strong> La piel de los equinos es el órgano más grande del cuerpo. Funciona como una barrera de protección contra el entorno, ayuda a controlar la temperatura corporal al sudar y funciona como un espejo de la salud interna del animal.[cite: 1]</p>
+                    <p><strong>Protección:</strong> La protección de la piel de los equinos requiere un manejo enfocado en la higiene adecuada, el control de plagas y la prevención solar.[cite: 1]</p>
                 </div>
-                <div class="text-block">
-                    <h2>Protección:</h2>
-                    <p>La protección de la piel de los equinos requiere un manejo enfocado en la higiene adecuada, el control de plagas y la prevención solar. Para mantener la barrera cutánea sana,</p>
+                <div class="slide-image-container">
+                    <img src="https://marketplace.canva.com/MADaAVtdh64/1/thumbnail_large-1/canva-dos-caballos-de-pie-MADaAVtdh64.jpg" alt="Caballos de pie">
                 </div>
             </div>
-        </section>
+        </div>
 
         <!-- Diapositiva 2: Tiña -->
-        <section class="slide slide-split">
-            <div class="content-wrapper split-layout">
-                <div class="text-side glass-panel fade-left">
-                    <h2 class="section-badge">Enfermedad</h2>
-                    <p>La tiña en los equinos es una infección cutánea muy contagiosa causada por hongos dermatofitos como Trichophyton equinum, que genera pérdida de pelo en forma circular,</p>
+        <div class="slide">
+            <div class="glass-panel">
+                <div class="slide-content">
+                    <h2>Tiña Equina</h2>
+                    <p>La tiña en los equinos es una infección cutánea muy contagiosa causada por hongos dermatofitos como <em>Trichophyton equinum</em>.[cite: 1]</p>
+                    <p>Esta enfermedad fúngica genera una característica pérdida de pelo en forma circular en diversas zonas del cuerpo del animal.[cite: 1]</p>
                 </div>
-                <div class="image-side fade-right">
-                    <img src="https://blog.terranea.es/wp-content/uploads/2017/08/tina-equina.jpg" alt="Tiña Equina" class="premium-image">
+                <div class="slide-image-container">
+                    <img src="https://blog.terranea.es/wp-content/uploads/2017/08/tina-equina.jpg" alt="Tiña en equinos">
                 </div>
             </div>
-        </section>
+        </div>
 
         <!-- Diapositiva 3: Sarna -->
-        <section class="slide slide-grid">
-            <div class="content-wrapper glass-panel fade-up">
-                <div class="text-center mb-large">
-                    <h2 class="section-badge">Enfermerdad:</h2>
-                    <p class="large-text">La sarna en los equinos es una enfermedad de la piel muy contagiosa causada por pequeños ácaros, siendo los tipos principales la sarcóptica, la psoróptica y la corióptica. Provoca picazón intensa, pérdida de pelo y costras gruesas.</p>
+        <div class="slide">
+            <div class="glass-panel">
+                <div class="slide-content">
+                    <h2>Sarna en Equinos</h2>
+                    <p>La sarna en los equinos es una enfermedad de la piel muy contagiosa causada por pequeños ácaros.[cite: 1]</p>
+                    <p>Los tipos principales son la sarcóptica, la psoróptica y la corióptica. Provoca picazón intensa, pérdida de pelo y costras gruesas.[cite: 1]</p>
                 </div>
-                <div class="image-grid-2">
-                    <img src="https://www.equusline.es/wp-content/uploads/2016/07/57sarna-en-caballos.jpg" alt="Sarna 1" class="premium-image fade-up delay-1">
-                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR1ct8o8FvWLYgCnjWofXOsFqUCtp7YN_XiYw2m8Xzw_R8E9N7hTYMmeYc&s=10" alt="Sarna 2" class="premium-image fade-up delay-2">
+                <div class="slide-image-container">
+                    <img src="https://www.equusline.es/wp-content/uploads/2016/07/57sarna-en-caballos.jpg" alt="Sarna en caballos">
                 </div>
             </div>
-        </section>
+        </div>
 
         <!-- Diapositiva 4: Dermatofilosis -->
-        <section class="slide slide-split reverse">
-            <div class="content-wrapper split-layout">
-                <div class="text-side glass-panel fade-right">
-                    <h2 class="section-badge">Enfermedad:</h2>
-                    <p>La dermatofilosis equina es una infección cutánea bacteriana superficial no contagiosa entre especies causada por el microorganismo Dermatophilus congolensis, el cual prolifera principalmente por la humedad prolongada, las lluvias frecuentes y las picaduras de insectos</p>
+        <div class="slide">
+            <div class="glass-panel">
+                <div class="slide-content">
+                    <h2>Dermatofilosis Equina</h2>
+                    <p>Es una infección cutánea bacteriana superficial no contagiosa entre especies causada por el microorganismo <em>Dermatophilus congolensis</em>.[cite: 1]</p>
+                    <p>Prolifera principalmente por la humedad prolongada, las lluvias frecuentes y las picaduras de insectos.[cite: 1]</p>
                 </div>
-                <div class="image-side fade-left">
-                    <img src="https://www.engormix.com/_next/image/?url=https%3A%2F%2Fimages.engormix.com%2FS_articles%2F5645_189.gif&w=640&q=100" alt="Dermatofilosis" class="premium-image">
+                <div class="slide-image-container">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR1ct8o8FvWLYgCnjWofXOsFqUCtp7YN_XiYw2m8Xzw_R8E9N7hTYMmeYc&s=10" alt="Dermatofilosis en caballo">
                 </div>
             </div>
-        </section>
+        </div>
 
         <!-- Diapositiva 5: Habronemosis -->
-        <section class="slide slide-split">
-            <div class="content-wrapper split-layout">
-                <div class="text-side glass-panel fade-left">
-                    <h2 class="section-badge">Enfermedad:</h2>
-                    <p>La habronemosis (o habronemiasis) en equinos es una enfermedad parasitaria causada por larvas de nematodos (Habronema muscae, Habronema microstoma y Draschia megastoma). Se transmite por medio de moscas, provocando lesiones cutáneas conocidas como "llagas de verano" o problemas estomacales</p>
+        <div class="slide">
+            <div class="glass-panel">
+                <div class="slide-content">
+                    <h2>Habronemosis (Llagas de Verano)</h2>
+                    <p>La habronemosis en equinos es una enfermedad parasitaria causada por larvas de nematodos (<em>Habronema muscae, Habronema microstoma</em> y <em>Draschia megastoma</em>).[cite: 1]</p>
+                    <p>Se transmite por medio de moscas, provocando lesiones cutáneas conocidas como "llagas de verano" o problemas estomacales.[cite: 1]</p>
                 </div>
-                <div class="image-side fade-right">
-                    <img src="https://marketplace.canva.com/MADaAVtdh64/1/thumbnail_large-1/canva-dos-caballos-de-pie-MADaAVtdh64.jpg" alt="Habronemosis" class="premium-image">
+                <div class="slide-image-container">
+                    <img src="https://www.engormix.com/_next/image/?url=https%3A%2F%2Fimages.engormix.com%2FS_articles%2F5645_189.gif&w=640&q=100" alt="Moscas y habronemosis">
                 </div>
             </div>
-        </section>
+        </div>
 
-        <!-- Diapositiva 6: Parásitos -->
-        <section class="slide slide-center">
-            <div class="content-wrapper glass-panel fade-up">
-                <h2 class="section-badge center-badge">Enfermedad:</h2>
-                <p class="large-text text-center">Los parásitos externos y cutáneos en los caballos causan picor, heridas e irritación. Los problemas más comunes son la habronemiasis cutánea (llagas de verano), la sarna y las garrapatas.</p>
-                <div class="single-image-container mt-large">
-                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQY8Im_avJWS2IndeMvSm8P5Ls7VtuhqWNbkkls5xFjIBnElFPmtU96LYe-&s=10" alt="Parásitos" class="premium-image wide-image fade-up delay-1">
+        <!-- Diapositiva 6: Parásitos Generales y Contraste -->
+        <div class="slide">
+            <div class="glass-panel">
+                <div class="slide-content">
+                    <h2>Parásitos Cutáneos</h2>
+                    <p>Los parásitos externos y cutáneos en los caballos causan picor, heridas e irritación. Los problemas más comunes son la habronemiasis cutánea, la sarna y las garrapatas.[cite: 1]</p>
+                    <p>Además, condiciones como el sarcoide equino y la pitiosis equina son dos de los problemas de piel más comunes y graves en los caballos, pero tienen causas y efectos muy diferentes.[cite: 1]</p>
+                </div>
+                <div class="slide-image-container">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQY8Im_avJWS2IndeMvSm8P5Ls7VtuhqWNbkkls5xFjIBnElFPmtU96LYe-&s=10" alt="Caballo y parásitos">
                 </div>
             </div>
-        </section>
+        </div>
 
-        <!-- Diapositiva 7: Comparación -->
-        <section class="slide slide-minimal">
-            <div class="content-wrapper text-center glass-panel fade-up">
-                <p class="xl-text">El sarcoide equino y la pitiosis equina son dos de los problemas de piel más comunes y graves en los caballos, pero tienen causas y efectos muy diferentes.</p>
-                <div class="divider"></div>
-                <p class="xl-text subtle-text">El sarcoide es un tumor de la piel causado por un virus, mientras que la pitiosis es una infección por un organismo parecido a un hongo que vive en el agua.</p>
-            </div>
-        </section>
-
-        <!-- Diapositiva 8: Sarcoide -->
-        <section class="slide slide-cards">
-            <div class="content-wrapper">
-                <h1 class="gradient-text text-center mb-large fade-up">Sarcoide Equino</h1>
-                <div class="card-layout">
-                    <div class="info-cards fade-left">
-                        <div class="card">
-                            <h3>Causa:</h3>
-                            <p>El virus del papiloma bovino tipos 1 y 2. Entra por heridas en la piel o por la picadura de insectos.</p>
-                        </div>
-                        <div class="card">
-                            <h3>Formas:</h3>
-                            <p>Puede verse como una zona plana y gris (oculta), como un bulto con verrugas (verrucosa), o como un tumor grande y carnoso que sangra fácil (fibroblástica).</p>
-                        </div>
-                        <div class="card">
-                            <h3>Señales:</h3>
-                            <p>Son bultos duros en la piel que no duelen ni dan picazón. Salen más en la cabeza, el pecho y las patas.</p>
-                        </div>
-                        <div class="card">
-                            <h3>Tratamiento:</h3>
-                            <p>Cirugía, láser, crioterapia (con frío) o cremas especiales. Vuelven a salir con mucha facilidad.</p>
-                        </div>
-                    </div>
-                    <div class="image-side fade-right">
-                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcReGufTyzOB1LD69dW-ovxa8M7vWPe0SeBx5iIzi3MWqtP2nVxDeS20SdLk&s=10" alt="Sarcoide Equino" class="premium-image tall-image">
-                    </div>
+        <!-- Diapositiva 7: Sarcoide -->
+        <div class="slide">
+            <div class="glass-panel">
+                <div class="slide-content">
+                    <h2>Sarcoide Equino</h2>
+                    <ul>
+                        <li><strong>Causa:</strong> El virus del papiloma bovino tipos 1 y 2. Entra por heridas en la piel o por la picadura de insectos.[cite: 1]</li>
+                        <li><strong>Formas:</strong> Zona plana y gris (oculta), bulto con verrugas (verrucosa), o tumor grande y carnoso (fibroblástica).[cite: 1]</li>
+                        <li><strong>Señales:</strong> Bultos duros en la piel que no duelen ni dan picazón, usualmente en cabeza, pecho y patas.[cite: 1]</li>
+                        <li><strong>Tratamiento:</strong> Cirugía, láser, crioterapia o cremas. Vuelven a salir con facilidad.[cite: 1]</li>
+                    </ul>
+                </div>
+                <div class="slide-image-container">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcReGufTyzOB1LD69dW-ovxa8M7vWPe0SeBx5iIzi3MWqtP2nVxDeS20SdLk&s=10" alt="Sarcoide equino">
                 </div>
             </div>
-        </section>
+        </div>
 
-        <!-- Diapositiva 9: Pitiosis -->
-        <section class="slide slide-cards reverse">
-            <div class="content-wrapper">
-                <h1 class="gradient-text text-center mb-large fade-up">Pitiosis Equina</h1>
-                <div class="card-layout reverse-layout">
-                    <div class="info-cards fade-right">
-                        <div class="card">
-                            <h3>Causa:</h3>
-                            <p>El agente Pythium insidiosum, que vive en zonas de clima cálido, pantanos y aguas estancadas.</p>
-                        </div>
-                        <div class="card">
-                            <h3>Formas:</h3>
-                            <p>Heridas abiertas que crecen muy rápido y crean tejido de carne sobrante (granulación).</p>
-                        </div>
-                        <div class="card">
-                            <h3>Señales:</h3>
-                            <p>Heridas que dan mucha picazón, echan un líquido con mal olor y tienen dentro unas piedras blandas de color blanco o amarillo llamadas kunkers.</p>
-                        </div>
-                        <div class="card">
-                            <h3>Tratamiento:</h3>
-                            <p>Operar para quitar todo el daño, usar vacunas especiales contra el organismo y dar medicamentos fuertes. Es muy difícil de curar si está muy avanzada.</p>
-                        </div>
-                    </div>
-                    <div class="image-side fade-left">
-                        <img src="https://www.researchgate.net/publication/319070114/figure/fig1/AS:526350973968384@1502503259850/Figura-3-a-Melanoma-b-pitiosis-c-habronemosis-d-sarcoide.jpg" alt="Pitiosis Equina" class="premium-image tall-image">
-                    </div>
+        <!-- Diapositiva 8: Pitiosis -->
+        <div class="slide">
+            <div class="glass-panel">
+                <div class="slide-content">
+                    <h2>Pitiosis Equina</h2>
+                    <ul>
+                        <li><strong>Causa:</strong> Infección por un organismo parecido a un hongo (<em>Pythium insidiosum</em>) que vive en el agua estancada y zonas cálidas.[cite: 1]</li>
+                        <li><strong>Formas:</strong> Heridas abiertas que crecen rápido y crean tejido de carne sobrante.[cite: 1]</li>
+                        <li><strong>Señales:</strong> Heridas con mucha picazón, echan líquido con mal olor y tienen "kunkers" (piedras blandas blancas/amarillas).[cite: 1]</li>
+                        <li><strong>Tratamiento:</strong> Operación quirúrgica, vacunas especiales y medicamentos fuertes. Muy difícil de curar si está avanzada.[cite: 1]</li>
+                    </ul>
+                </div>
+                <div class="slide-image-container">
+                    <img src="https://www.researchgate.net/publication/319070114/figure/fig1/AS:526350973968384@1502503259850/Figura-3-a-Melanoma-b-pitiosis-c-habronemosis-d-sarcoide.jpg" alt="Pitiosis equina">
                 </div>
             </div>
-        </section>
-    </main>
-    <script src="script.js"></script>
+        </div>
+
+        <!-- Puntos indicadores dentro del contenedor -->
+        <div class="indicators" id="indicators"></div>
+
+        <!-- Controles fuera de las tarjetas -->
+        <div class="controls">
+            <button onclick="changeSlide(-1)">&#10094; Anterior</button>
+            <button onclick="changeSlide(1)">Siguiente &#10095;</button>
+        </div>
+
+    </div>
+
+    <script>
+        let currentSlideIndex = 0;
+        const slides = document.querySelectorAll('.slide');
+        const indicatorsContainer = document.getElementById('indicators');
+
+        // Crear puntos indicadores
+        slides.forEach((_, index) => {
+            const dot = document.createElement('div');
+            dot.classList.add('dot');
+            if(index === 0) dot.classList.add('active');
+            indicatorsContainer.appendChild(dot);
+        });
+
+        const dots = document.querySelectorAll('.dot');
+
+        function showSlide(index) {
+            // Manejo de límites
+            if (index >= slides.length) {
+                currentSlideIndex = 0;
+            } else if (index < 0) {
+                currentSlideIndex = slides.length - 1;
+            } else {
+                currentSlideIndex = index;
+            }
+
+            // Actualizar clases activas
+            slides.forEach(slide => slide.classList.remove('active'));
+            dots.forEach(dot => dot.classList.remove('active'));
+
+            slides[currentSlideIndex].classList.add('active');
+            dots[currentSlideIndex].classList.add('active');
+        }
+
+        function changeSlide(direction) {
+            showSlide(currentSlideIndex + direction);
+        }
+    </script>
 </body>
 </html>
