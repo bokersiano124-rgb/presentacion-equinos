@@ -23,23 +23,33 @@ document.addEventListener("DOMContentLoaded", () => {
         if (e.key === 'ArrowRight' || e.key === ' ') changeSlide(1);
     });
 
-    // Navegación Táctil (Swipe para móviles)
+    // Navegación Táctil (Swipe para móviles) - MEJORADA
     let touchStartX = 0;
+    let touchStartY = 0;
     let touchEndX = 0;
+    let touchEndY = 0;
 
     document.addEventListener('touchstart', e => {
         touchStartX = e.changedTouches[0].screenX;
-    }, false);
+        touchStartY = e.changedTouches[0].screenY;
+    }, { passive: true });
 
     document.addEventListener('touchend', e => {
         touchEndX = e.changedTouches[0].screenX;
+        touchEndY = e.changedTouches[0].screenY;
         handleSwipe();
-    }, false);
+    }, { passive: true });
 
     function handleSwipe() {
-        const minSwipeDistance = 50; // distancia mínima para considerar swipe
-        if (touchEndX < touchStartX - minSwipeDistance) changeSlide(1); // Swipe Izquierda (Siguiente)
-        if (touchEndX > touchStartX + minSwipeDistance) changeSlide(-1); // Swipe Derecha (Anterior)
+        const swipeDistX = touchEndX - touchStartX;
+        const swipeDistY = touchEndY - touchStartY;
+        const minSwipeDistance = 50; 
+
+        // Comprueba que el movimiento horizontal sea mayor que el vertical
+        if (Math.abs(swipeDistX) > Math.abs(swipeDistY) && Math.abs(swipeDistX) > minSwipeDistance) {
+            if (swipeDistX < 0) changeSlide(1); // Swipe Izquierda (Siguiente)
+            else changeSlide(-1); // Swipe Derecha (Anterior)
+        }
     }
 
     // Función principal para cambiar diapositivas
