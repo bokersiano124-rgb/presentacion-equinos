@@ -3,206 +3,182 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dermatología Equina | Premium Edition</title>
+    <title>Dermatología Equina | Pro</title>
     <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@300;400;600;800&family=Space+Grotesk:wght@700&display=swap" rel="stylesheet">
+    <!-- Tipografía estilo Apple San Francisco -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <!-- Efectos Globales -->
-    <div class="cursor-glow"></div>
-    <div class="ambient-background"></div>
 
-    <!-- Contenedor Principal (Scroll Snap) -->
-    <main class="snap-container">
+    <!-- ==========================================
+         SECCIÓN 1: HERO (Portada Súper Limpia)
+         ========================================== -->
+    <header class="hero-section fade-in">
+        <div class="hero-image-container">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQY8Im_avJWS2IndeMvSm8P5Ls7VtuhqWNbkkls5xFjIBnElFPmtU96LYe-&s=10" alt="Portada Equina">
+            <div class="hero-fade"></div>
+        </div>
+        <div class="hero-text">
+            <h1>La piel de los equinos.</h1>
+            <p class="subtitle">El órgano más grande del cuerpo[cite: 1].</p>
+        </div>
+    </header>
 
-        <!-- ==========================================
-             DIAPOSITIVA 1: INTRODUCCIÓN 
-             ========================================== -->
-        <section class="snap-slide">
-            <div class="symmetric-hero">
-                <div class="hero-bg" style="background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQY8Im_avJWS2IndeMvSm8P5Ls7VtuhqWNbkkls5xFjIBnElFPmtU96LYe-&s=10');"></div>
-                
-                <div class="hero-glass-box 3d-card">
-                    <div class="glow-layer"></div>
-                    <h1 class="title-gradient transform-up">La Piel de los Equinos</h1>
-                    <p class="subtitle transform-up delay-1">El órgano más grande del cuerpo[cite: 1].</p>
+    <!-- ==========================================
+         SECCIÓN 2: IMPORTANCIA Y PROTECCIÓN
+         ========================================== -->
+    <section class="intro-section fade-in">
+        <div class="container grid-2">
+            <div class="text-block">
+                <h3>Importancia</h3>
+                <p>Funciona como una barrera de protección contra el entorno ayuda a controlar la temperatura corporal al sudar y funciona como un espejo de la salud interna del animal[cite: 1].</p>
+            </div>
+            <div class="text-block">
+                <h3>Protección</h3>
+                <p>La protección de la piel de los equinos requiere un manejo enfocado en la higiene adecuada, el control de plagas y la prevención solar[cite: 1]. Para mantener la barrera cutánea sana,[cite: 1]</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==========================================
+         SECCIÓN 3: ENFERMEDADES (Bento Grid Perfecto)
+         ========================================== -->
+    <section class="bento-section fade-in">
+        <div class="container">
+            <h2 class="section-title">Enfermedades Comunes.</h2>
+            
+            <div class="bento-grid">
+                <!-- Tiña -->
+                <article class="bento-card">
+                    <div class="card-img-wrapper">
+                        <img src="https://blog.terranea.es/wp-content/uploads/2017/08/tina-equina.jpg" alt="Tiña">
+                    </div>
+                    <div class="card-content">
+                        <h3>La Tiña</h3>
+                        <p>La tiña en los equinos es una infección cutánea muy contagiosa causada por hongos dermatofitos como Trichophyton equinum[cite: 1].</p>
+                        <p class="highlight">Genera pérdida de pelo en forma circular,[cite: 1].</p>
+                    </div>
+                </article>
+
+                <!-- Sarna -->
+                <article class="bento-card">
+                    <div class="card-img-wrapper">
+                        <img src="https://www.equusline.es/wp-content/uploads/2016/07/57sarna-en-caballos.jpg" alt="Sarna">
+                    </div>
+                    <div class="card-content">
+                        <h3>La Sarna</h3>
+                        <p>La sarna en los equinos es una enfermedad de la piel muy contagiosa causada por pequeños ácaros, siendo los tipos principales la sarcóptica, la psoróptica y la corióptica[cite: 1].</p>
+                        <p class="highlight">Provoca picazón intensa, pérdida de pelo y costras gruesas[cite: 1].</p>
+                    </div>
+                </article>
+
+                <!-- Dermatofilosis -->
+                <article class="bento-card">
+                    <div class="card-img-wrapper">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR1ct8o8FvWLYgCnjWofXOsFqUCtp7YN_XiYw2m8Xzw_R8E9N7hTYMmeYc&s=10" alt="Dermatofilosis">
+                    </div>
+                    <div class="card-content">
+                        <h3>Dermatofilosis</h3>
+                        <p>La dermatofilosis equina es una infección cutánea bacteriana superficial no contagiosa entre especies causada por el microorganismo Dermatophilus congolensis[cite: 1].</p>
+                        <p class="highlight">Prolifera principalmente por la humedad prolongada, las lluvias frecuentes y las picaduras de insectos[cite: 1].</p>
+                    </div>
+                </article>
+
+                <!-- Habronemosis -->
+                <article class="bento-card">
+                    <div class="card-img-wrapper">
+                        <img src="https://www.engormix.com/_next/image/?url=https%3A%2F%2Fimages.engormix.com%2FS_articles%2F5645_189.gif&w=640&q=100" alt="Habronemosis">
+                    </div>
+                    <div class="card-content">
+                        <h3>Habronemosis</h3>
+                        <p>La habronemosis (o habronemiasis) en equinos es una enfermedad parasitaria causada por larvas de nematodos (Habronema muscae, Habronema microstoma y Draschia megastoma)[cite: 1]. Se transmite por medio de moscas[cite: 1].</p>
+                        <p class="highlight">Provoca lesiones cutáneas conocidas como "llagas de verano" o problemas estomacales[cite: 1].</p>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==========================================
+         SECCIÓN 4: PARÁSITOS (Banner Simétrico)
+         ========================================== -->
+    <section class="banner-section fade-in">
+        <div class="banner-bg">
+            <img src="https://marketplace.canva.com/MADaAVtdh64/1/thumbnail_large-1/canva-dos-caballos-de-pie-MADaAVtdh64.jpg" alt="Parásitos">
+            <div class="banner-overlay"></div>
+        </div>
+        <div class="banner-content">
+            <h2>Parásitos en equinos.</h2>
+            <p class="banner-lead">Amenaza silenciosa que puede afectar su salud y desempeño[cite: 1].</p>
+            <div class="banner-info">
+                <p>Los parásitos externos y cutáneos en los caballos causan picor, heridas e irritación[cite: 1].</p>
+                <p><strong>Los problemas más comunes son[cite: 1]:</strong></p>
+                <ul>
+                    <li>La habronemiasis cutánea (llagas de verano)[cite: 1].</li>
+                    <li>La sarna[cite: 1].</li>
+                    <li>Las garrapatas[cite: 1].</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==========================================
+         SECCIÓN 5: COMPARACIÓN (Data Grid Estricto)
+         ========================================== -->
+    <section class="comparison-section fade-in">
+        <div class="container">
+            <div class="comparison-header">
+                <h2>Problemas Graves de Piel.</h2>
+                <p>El sarcoide equino y la pitiosis equina son dos de los problemas de piel más comunes y graves en los caballos, pero tienen causas y efectos muy diferentes[cite: 1].</p>
+            </div>
+
+            <div class="comparison-grid">
+                <!-- Columna Sarcoide -->
+                <div class="comp-column">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcReGufTyzOB1LD69dW-ovxa8M7vWPe0SeBx5iIzi3MWqtP2nVxDeS20SdLk&s=10" alt="Sarcoide" class="comp-img">
+                    <h3 class="comp-title">Sarcoide Equino</h3>
+                    <p class="comp-def">El sarcoide es un tumor de la piel causado por un virus[cite: 1].</p>
                     
-                    <div class="symmetric-grid transform-up delay-2">
-                        <div class="grid-item">
-                            <h3>Importancia</h3>
-                            <p>Funciona como una barrera de protección contra el entorno ayuda a controlar la temperatura corporal al sudar y funciona como un espejo de la salud interna del animal[cite: 1].</p>
-                        </div>
-                        <div class="grid-item">
-                            <h3>Protección</h3>
-                            <p>La protección de la piel de los equinos requiere un manejo enfocado en la higiene adecuada, el control de plagas y la prevención solar[cite: 1]. Para mantener la barrera cutánea sana,[cite: 1]</p>
-                        </div>
-                    </div>
+                    <dl class="spec-list">
+                        <dt>Causa</dt>
+                        <dd>El virus del papiloma bovino tipos 1 y 2. Entra por heridas en la piel o por la picadura de insectos[cite: 1].</dd>
+                        
+                        <dt>Formas</dt>
+                        <dd>Puede verse como una zona plana y gris (oculta), como un bulto con verrugas (verrucosa), o como un tumor grande y carnoso que sangra fácil (fibroblástica)[cite: 1].</dd>
+                        
+                        <dt>Señales</dt>
+                        <dd>Son bultos duros en la piel que no duelen ni dan picazón. Salen más en la cabeza, el pecho y las patas[cite: 1].</dd>
+                        
+                        <dt>Tratamiento</dt>
+                        <dd>Cirugía, láser, crioterapia (con frío) o cremas especiales. Vuelven a salir con mucha facilidad[cite: 1].</dd>
+                    </dl>
                 </div>
-            </div>
-            <div class="scroll-down-hint">↓ Desliza para explorar ↓</div>
-        </section>
 
-        <!-- ==========================================
-             DIAPOSITIVA 2: TIÑA Y SARNA
-             ========================================== -->
-        <section class="snap-slide">
-            <div class="mirror-layout">
-                
-                <!-- Panel: Tiña -->
-                <div class="mirror-panel 3d-card">
-                    <div class="glow-layer"></div>
+                <!-- Columna Pitiosis -->
+                <div class="comp-column">
+                    <img src="https://www.researchgate.net/publication/319070114/figure/fig1/AS:526350973968384@1502503259850/Figura-3-a-Melanoma-b-pitiosis-c-habronemosis-d-sarcoide.jpg" alt="Pitiosis" class="comp-img">
+                    <h3 class="comp-title">Pitiosis Equina</h3>
+                    <p class="comp-def">Infección por un organismo parecido a un hongo que vive en el agua[cite: 1].</p>
                     
-                    <!-- Imagen sin recortes (Blur Backdrop) -->
-                    <div class="image-showcase">
-                        <div class="image-blur-bg" style="background-image: url('https://blog.terranea.es/wp-content/uploads/2017/08/tina-equina.jpg');"></div>
-                        <img src="https://blog.terranea.es/wp-content/uploads/2017/08/tina-equina.jpg" alt="Tiña en caballos" class="image-contain">
-                    </div>
-
-                    <div class="panel-content">
-                        <h2>La Tiña</h2>
-                        <div class="content-scrollbox">
-                            <p>La tiña en los equinos es una infección cutánea muy contagiosa causada por hongos dermatofitos como Trichophyton equinum, que genera pérdida de pelo en forma circular,[cite: 1]</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Panel: Sarna -->
-                <div class="mirror-panel 3d-card">
-                    <div class="glow-layer"></div>
-                    
-                    <!-- Imagen sin recortes -->
-                    <div class="image-showcase">
-                        <div class="image-blur-bg" style="background-image: url('https://www.equusline.es/wp-content/uploads/2016/07/57sarna-en-caballos.jpg');"></div>
-                        <img src="https://www.equusline.es/wp-content/uploads/2016/07/57sarna-en-caballos.jpg" alt="Sarna en caballos" class="image-contain">
-                    </div>
-
-                    <div class="panel-content">
-                        <h2>La Sarna</h2>
-                        <div class="content-scrollbox">
-                            <p>La sarna en los equinos es una enfermedad de la piel muy contagiosa causada por pequeños ácaros, siendo los tipos principales la sarcóptica, la psoróptica y la corióptica[cite: 1].</p>
-                            <p>Provoca picazón intensa, pérdida de pelo y costras gruesas[cite: 1].</p>
-                        </div>
-                    </div>
+                    <dl class="spec-list">
+                        <dt>Causa</dt>
+                        <dd>El agente Pythium insidiosum, que vive en zonas de clima cálido, pantanos y aguas estancadas[cite: 1].</dd>
+                        
+                        <dt>Formas</dt>
+                        <dd>Heridas abiertas que crecen muy rápido y crean tejido de carne sobrante (granulación)[cite: 1].</dd>
+                        
+                        <dt>Señales</dt>
+                        <dd>Heridas que dan mucha picazón, echan un líquido con mal olor y tienen dentro unas piedras blandas de color blanco o amarillo llamadas kunkers[cite: 1].</dd>
+                        
+                        <dt>Tratamiento</dt>
+                        <dd>Operar para quitar todo el daño, usar vacunas especiales contra el organismo y dar medicamentos fuertes. Es muy difícil de curar si está muy avanzada[cite: 1].</dd>
+                    </dl>
                 </div>
             </div>
-        </section>
-
-        <!-- ==========================================
-             DIAPOSITIVA 3: DERMATOFILOSIS Y HABRONEMOSIS
-             ========================================== -->
-        <section class="snap-slide">
-            <div class="mirror-layout reverse-mobile">
-                
-                <!-- Panel: Dermatofilosis -->
-                <div class="mirror-panel dark-theme 3d-card">
-                    <div class="glow-layer"></div>
-                    <div class="image-showcase">
-                        <div class="image-blur-bg" style="background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR1ct8o8FvWLYgCnjWofXOsFqUCtp7YN_XiYw2m8Xzw_R8E9N7hTYMmeYc&s=10');"></div>
-                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR1ct8o8FvWLYgCnjWofXOsFqUCtp7YN_XiYw2m8Xzw_R8E9N7hTYMmeYc&s=10" alt="Dermatofilosis" class="image-contain">
-                    </div>
-                    <div class="panel-content">
-                        <h2 class="text-emerald">Dermatofilosis</h2>
-                        <div class="content-scrollbox">
-                            <p>La dermatofilosis equina es una infección cutánea bacteriana superficial no contagiosa entre especies causada por el microorganismo Dermatophilus congolensis, el cual prolifera principalmente por la humedad prolongada, las lluvias frecuentes y las picaduras de insectos[cite: 1].</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Panel: Habronemosis -->
-                <div class="mirror-panel dark-theme 3d-card">
-                    <div class="glow-layer"></div>
-                    <div class="image-showcase">
-                        <div class="image-blur-bg" style="background-image: url('https://www.engormix.com/_next/image/?url=https%3A%2F%2Fimages.engormix.com%2FS_articles%2F5645_189.gif&w=640&q=100');"></div>
-                        <img src="https://www.engormix.com/_next/image/?url=https%3A%2F%2Fimages.engormix.com%2FS_articles%2F5645_189.gif&w=640&q=100" alt="Habronemosis" class="image-contain">
-                    </div>
-                    <div class="panel-content">
-                        <h2 class="text-emerald">Habronemosis</h2>
-                        <div class="content-scrollbox">
-                            <p>La habronemosis (o habronemiasis) en equinos es una enfermedad parasitaria causada por larvas de nematodos (Habronema muscae, Habronema microstoma y Draschia megastoma)[cite: 1].</p>
-                            <p>Se transmite por medio de moscas, provocando lesiones cutáneas conocidas como "llagas de verano" o problemas estomacales[cite: 1].</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- ==========================================
-             DIAPOSITIVA 4: PARÁSITOS GENERALES
-             ========================================== -->
-        <section class="snap-slide">
-            <div class="orb-layout">
-                <div class="hero-bg pulse-bg" style="background-image: url('https://marketplace.canva.com/MADaAVtdh64/1/thumbnail_large-1/canva-dos-caballos-de-pie-MADaAVtdh64.jpg');"></div>
-                <div class="orb-glass-box 3d-card">
-                    <div class="glow-layer"></div>
-                    <div class="perfect-center">
-                        <h2 class="title-gradient mega">Parásitos en Equinos</h2>
-                        <p class="highlight-text">Amenaza silenciosa que puede afectar su salud y desempeño[cite: 1].</p>
-                        <div class="content-scrollbox large-scroll">
-                            <p>Los parásitos externos y cutáneos en los caballos causan picor, heridas e irritación[cite: 1].</p>
-                            <br>
-                            <p><strong>Los problemas más comunes son[cite: 1]:</strong></p>
-                            <ul class="premium-list">
-                                <li>La habronemiasis cutánea (llagas de verano)[cite: 1].</li>
-                                <li>La sarna[cite: 1].</li>
-                                <li>Las garrapatas[cite: 1].</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- ==========================================
-             DIAPOSITIVA 5: SARCOIDE VS PITIOSIS
-             ========================================== -->
-        <section class="snap-slide">
-            <div class="header-overlay transform-up">
-                <h2>Problemas Graves de Piel</h2>
-                <p>El sarcoide equino y la pitiosis equina son dos de los problemas de piel más comunes y graves en los caballos, pero tienen causas y efectos muy diferentes[cite: 1]. El sarcoide es un tumor de la piel causado por un virus, mientras que la pitiosis es una infección por un organismo parecido a un hongo que vive en el agua[cite: 1].</p>
-            </div>
-
-            <div class="mirror-layout comparison-layout">
-                <!-- Panel: Sarcoide -->
-                <div class="mirror-panel 3d-card border-accent">
-                    <div class="glow-layer"></div>
-                    <div class="image-showcase">
-                        <div class="image-blur-bg" style="background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcReGufTyzOB1LD69dW-ovxa8M7vWPe0SeBx5iIzi3MWqtP2nVxDeS20SdLk&s=10');"></div>
-                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcReGufTyzOB1LD69dW-ovxa8M7vWPe0SeBx5iIzi3MWqtP2nVxDeS20SdLk&s=10" alt="Sarcoide Equino" class="image-contain">
-                    </div>
-                    <div class="panel-content">
-                        <h2>Sarcoide Equino</h2>
-                        <div class="content-scrollbox">
-                            <p><strong>Causa:</strong> El virus del papiloma bovino tipos 1 y 2[cite: 1]. Entra por heridas en la piel o por la picadura de insectos[cite: 1].</p>
-                            <p><strong>Formas:</strong> Puede verse como una zona plana y gris (oculta), como un bulto con verrugas (verrucosa), o como un tumor grande y carnoso que sangra fácil (fibroblástica)[cite: 1].</p>
-                            <p><strong>Señales:</strong> Son bultos duros en la piel que no duelen ni dan picazón[cite: 1]. Salen más en la cabeza, el pecho y las patas[cite: 1].</p>
-                            <p><strong>Tratamiento:</strong> Cirugía, láser, crioterapia (con frío) o cremas especiales[cite: 1]. Vuelven a salir con mucha facilidad[cite: 1].</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Panel: Pitiosis -->
-                <div class="mirror-panel 3d-card border-accent">
-                    <div class="glow-layer"></div>
-                    <div class="image-showcase">
-                        <div class="image-blur-bg" style="background-image: url('https://www.researchgate.net/publication/319070114/figure/fig1/AS:526350973968384@1502503259850/Figura-3-a-Melanoma-b-pitiosis-c-habronemosis-d-sarcoide.jpg');"></div>
-                        <img src="https://www.researchgate.net/publication/319070114/figure/fig1/AS:526350973968384@1502503259850/Figura-3-a-Melanoma-b-pitiosis-c-habronemosis-d-sarcoide.jpg" alt="Pitiosis Equina" class="image-contain">
-                    </div>
-                    <div class="panel-content">
-                        <h2>Pitiosis Equina</h2>
-                        <div class="content-scrollbox">
-                            <p><strong>Causa:</strong> El agente Pythium insidiosum, que vive en zonas de clima cálido, pantanos y aguas estancadas[cite: 1].</p>
-                            <p><strong>Formas:</strong> Heridas abiertas que crecen muy rápido y crean tejido de carne sobrante (granulación)[cite: 1].</p>
-                            <p><strong>Señales:</strong> Heridas que dan mucha picazón, echan un líquido con mal olor y tienen dentro unas piedras blandas de color blanco o amarillo llamadas kunkers[cite: 1].</p>
-                            <p><strong>Tratamiento:</strong> Operar para quitar todo el daño, usar vacunas especiales contra el organismo y dar medicamentos fuertes[cite: 1]. Es muy difícil de curar si está muy avanzada[cite: 1].</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-    </main>
+        </div>
+    </section>
 
     <script src="script.js"></script>
 </body>
