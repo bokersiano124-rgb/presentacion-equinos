@@ -1,347 +1,278 @@
+/* ==========================================================================
+   SISTEMA DE DISEÑO ULTRA-SIMÉTRICO Y VARIABLES
+   ========================================================================== */
 :root {
-    /* Paleta Premium */
-    --blanco: #ffffff;
-    --gris-muy-claro: #f5f5f7;
-    --gris-oscuro: #1d1d1f;
-    --gris-texto: #86868b;
-    --verde-esmeralda: #10b981;
-    --verde-oliva: #65a30d;
-    --azul-profundo: #1e3a8a;
-    --azul-turquesa: #06b6d4;
+    --bg-base: #050505;
+    --text-main: #f5f5f7;
+    --text-muted: #a1a1aa;
+    --accent-1: #00ff88;
+    --accent-2: #00d4ff;
     
-    /* Variables de Diseño */
-    --font-principal: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-    --radio-borde: 24px;
-    --sombra-suave: 0 20px 40px rgba(0,0,0,0.06);
-    --sombra-hover: 0 30px 60px rgba(0,0,0,0.12);
+    --glass-bg: rgba(20, 20, 25, 0.4);
+    --glass-border: rgba(255, 255, 255, 0.1);
+    --glass-shadow: 0 30px 60px rgba(0, 0, 0, 0.6);
+    
+    --radius: 30px;
+    --font-ui: 'SF Pro Display', system-ui, sans-serif;
+    --font-head: 'Space Grotesk', sans-serif;
+    
+    --transition-smooth: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    scrollbar-width: thin; /* Para Firefox */
+    scrollbar-color: var(--accent-1) transparent;
 }
+
+/* Scrollbar Personalizado (Webkit) para cajas que no se rompen */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 10px; }
+::-webkit-scrollbar-thumb:hover { background: var(--accent-1); }
 
 body {
-    font-family: var(--font-principal);
-    background-color: var(--blanco);
-    color: var(--gris-oscuro);
+    font-family: var(--font-ui);
+    background-color: var(--bg-base);
+    color: var(--text-main);
+    overflow: hidden; /* Oculta scroll normal, usamos Snap */
     line-height: 1.6;
-    overflow-x: hidden;
 }
 
-h1, h2, h3 {
-    letter-spacing: -0.02em;
-    font-weight: 800;
+/* ==========================================================================
+   SCROLL SNAP ARCHITECTURE (Simetría Perfecta)
+   ========================================================================== */
+.snap-container {
+    height: 100vh;
+    overflow-y: scroll;
+    scroll-snap-type: y mandatory; /* Obliga a alinear las secciones exactas */
+    scroll-behavior: smooth;
+    position: relative;
+    z-index: 2;
 }
 
-img {
-    max-width: 100%;
-    height: auto;
-    display: block;
-}
-
-/* --- Utilidades --- */
-.full-screen {
-    min-height: 100vh;
+.snap-slide {
+    height: 100vh;
+    width: 100vw;
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+    position: relative;
     display: flex;
-    flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding: 5vw;
+    padding: 4vw;
+    overflow: hidden;
 }
 
-.reveal {
-    opacity: 0;
-    transform: translateY(40px);
-    transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1), transform 1s cubic-bezier(0.16, 1, 0.3, 1);
+/* ==========================================================================
+   AMBIENTACIÓN & CURSOR 3D
+   ========================================================================== */
+.ambient-background {
+    position: fixed;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80vw; height: 80vh;
+    background: radial-gradient(circle, rgba(0,255,136,0.15) 0%, rgba(0,212,255,0.1) 40%, rgba(0,0,0,0) 70%);
+    filter: blur(100px);
+    z-index: 0;
+    pointer-events: none;
+    animation: pulseAmbient 10s infinite alternate linear;
+}
+@keyframes pulseAmbient {
+    0% { transform: translate(-50%, -50%) scale(1) rotate(0deg); }
+    100% { transform: translate(-50%, -50%) scale(1.2) rotate(10deg); }
 }
 
-.reveal.active {
-    opacity: 1;
-    transform: translateY(0);
+.cursor-glow {
+    position: fixed;
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(255,255,255,0.15) 0%, transparent 60%);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate(-50%, -50%);
+    transition: opacity 0.3s;
+    mix-blend-mode: screen;
 }
 
-.glass-card {
-    background: rgba(255, 255, 255, 0.7);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border: 1px solid rgba(255, 255, 255, 0.5);
-    border-radius: var(--radio-borde);
-    padding: 2rem;
-    box-shadow: var(--sombra-suave);
+/* ==========================================================================
+   ESTRUCTURAS "SAFE BOX" PARA NO ROMPER CUADROS
+   ========================================================================== */
+/* Todo el texto dentro de paneles tiene un límite de altura y hace scroll interno */
+.content-scrollbox {
+    max-height: 25vh; /* Altura máxima estricta */
+    overflow-y: auto;
+    padding-right: 15px;
+    margin-top: 15px;
+    mask-image: linear-gradient(to bottom, black 80%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to bottom, black 80%, transparent 100%);
+}
+.large-scroll {
+    max-height: 40vh;
 }
 
-/* --- Hero Section --- */
-.hero {
-    text-align: center;
-    background: linear-gradient(180deg, var(--gris-muy-claro) 0%, var(--blanco) 100%);
-    gap: 4rem;
-}
+.content-scrollbox p { margin-bottom: 1rem; font-size: clamp(1rem, 1.2vw, 1.2rem); }
+.content-scrollbox strong { color: var(--accent-1); }
 
-.hero h1 {
+/* ==========================================================================
+   UTILERÍAS DE ANIMACIÓN Y TIPOGRAFÍA
+   ========================================================================== */
+.title-gradient {
+    font-family: var(--font-head);
     font-size: clamp(3rem, 6vw, 6rem);
-    background: linear-gradient(90deg, var(--azul-profundo), var(--azul-turquesa));
+    background: linear-gradient(135deg, var(--accent-1), var(--accent-2));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+    line-height: 1.1;
     margin-bottom: 1rem;
+    letter-spacing: -2px;
 }
+.title-gradient.mega { font-size: clamp(4rem, 8vw, 7rem); }
+.text-emerald { color: var(--accent-1); font-family: var(--font-head); font-size: 2.5rem; }
 
-.hero .subtitle {
-    font-size: clamp(1.2rem, 2vw, 2rem);
-    color: var(--gris-texto);
-    margin-bottom: 3rem;
-    font-weight: 300;
+.transform-up {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: var(--transition-smooth);
 }
+.transform-up.active { opacity: 1; transform: translateY(0); }
+.delay-1 { transition-delay: 0.1s; }
+.delay-2 { transition-delay: 0.2s; }
 
-.hero-info {
-    max-width: 800px;
-    margin: 0 auto;
-    font-size: 1.1rem;
-    color: var(--gris-oscuro);
-}
-
-.hero-info p {
-    margin-bottom: 1rem;
-}
-
-.hero-image-container {
-    width: 100%;
-    max-width: 1200px;
-    border-radius: var(--radio-borde);
-    overflow: hidden;
-    box-shadow: var(--sombra-suave);
-}
-
-.hero-image-container img {
-    width: 100%;
-    height: 60vh;
-    object-fit: cover;
-}
-
-/* --- Enfermedades Grid --- */
-.enfermedades-section {
-    padding: 8vw 5vw;
-    background-color: var(--blanco);
-}
-
-.section-header {
-    text-align: center;
-    margin-bottom: 5rem;
-}
-
-.section-header h2 {
-    font-size: clamp(2.5rem, 4vw, 4rem);
-    margin-bottom: 1rem;
-}
-
-.section-header p {
-    font-size: 1.2rem;
-    color: var(--gris-texto);
-}
-
-.grid-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 3rem;
-    max-width: 1400px;
-    margin: 0 auto;
-}
-
-.card {
-    background: var(--gris-muy-claro);
-    border-radius: var(--radio-borde);
-    overflow: hidden;
-    transition: transform 0.4s ease, box-shadow 0.4s ease;
-}
-
-.card:hover {
-    transform: translateY(-10px);
-    box-shadow: var(--sombra-hover);
-}
-
-.card-image {
-    height: 250px;
-    overflow: hidden;
-}
-
-.card-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.6s ease;
-}
-
-.card:hover .card-image img {
-    transform: scale(1.05);
-}
-
-.card-content {
-    padding: 2.5rem;
-}
-
-.card-content h3 {
-    font-size: 1.8rem;
-    margin-bottom: 1rem;
-    color: var(--azul-profundo);
-}
-
-.card-content ul {
-    margin-top: 1.5rem;
-    padding-left: 1.2rem;
-    color: var(--gris-texto);
-}
-
-.card-content li {
-    margin-bottom: 0.8rem;
-}
-
-/* --- Parásitos Section --- */
-.parasitos-section {
-    background: var(--gris-oscuro);
-    color: var(--blanco);
-}
-
-.split-layout {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 4rem;
-    max-width: 1400px;
-    width: 100%;
-    align-items: center;
-}
-
-.split-text {
-    flex: 1;
-    min-width: 300px;
-}
-
-.split-text h2 {
-    font-size: clamp(2.5rem, 4vw, 4rem);
-    margin-bottom: 1.5rem;
-}
-
-.highlight-text {
-    font-size: 1.5rem;
-    color: var(--verde-esmeralda);
-    margin-bottom: 2rem;
-    font-weight: 300;
-}
-
-.glass-box {
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    padding: 2rem;
-    border-radius: var(--radio-borde);
-}
-
-.glass-box ul {
-    margin-top: 1rem;
-    padding-left: 1.5rem;
-}
-
-.glass-box li {
-    margin-bottom: 0.5rem;
-    color: var(--gris-muy-claro);
-}
-
-.split-image {
-    flex: 1;
-    min-width: 300px;
-    border-radius: var(--radio-borde);
-    overflow: hidden;
-}
-
-.split-image img {
-    width: 100%;
-    height: auto;
-    object-fit: cover;
-}
-
-/* --- Comparación Section --- */
-.comparacion-section {
-    padding: 8vw 5vw;
-    background-color: var(--gris-muy-claro);
-}
-
-.comparison-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-    gap: 4rem;
-    max-width: 1400px;
-    margin: 0 auto;
-}
-
-.compare-card {
-    background: var(--blanco);
-    border-radius: var(--radio-borde);
-    padding: 3rem;
-    box-shadow: var(--sombra-suave);
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
-}
-
-.compare-card img {
-    width: 100%;
-    height: 350px;
-    object-fit: cover;
-    border-radius: calc(var(--radio-borde) - 10px);
-}
-
-.compare-info h3 {
-    font-size: 2.2rem;
-    margin-bottom: 0.5rem;
-}
-
-.tag {
-    display: inline-block;
-    background: rgba(16, 185, 129, 0.1);
-    color: var(--verde-esmeralda);
-    padding: 0.5rem 1rem;
-    border-radius: 50px;
-    font-weight: 600;
-    font-size: 0.9rem;
-    margin-bottom: 2rem;
-}
-
-.clean-list {
-    list-style: none;
-    padding: 0;
-}
-
-.clean-list li {
+/* ==========================================================================
+   EFECTO DE TARJETA 3D (Se aplica vía JS y CSS)
+   ========================================================================== */
+.3d-card {
     position: relative;
-    padding-left: 1.5rem;
-    margin-bottom: 1.5rem;
-    color: var(--gris-texto);
+    background: var(--glass-bg);
+    backdrop-filter: blur(40px);
+    -webkit-backdrop-filter: blur(40px);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius);
+    box-shadow: var(--glass-shadow);
+    transform-style: preserve-3d;
+    transform: perspective(1000px) rotateX(0) rotateY(0) translateZ(0);
+    transition: transform 0.1s; /* Rápido para el ratón */
+    overflow: hidden;
 }
-
-.clean-list li::before {
-    content: "•";
+.glow-layer {
     position: absolute;
-    left: 0;
-    color: var(--azul-turquesa);
-    font-size: 1.5rem;
-    line-height: 1;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(255,255,255,0.1) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: 10;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+.3d-card:hover .glow-layer { opacity: 1; }
+
+/* ==========================================================================
+   DISEÑOS DE SECCIÓN (LAYOUTS SIMÉTRICOS)
+   ========================================================================== */
+
+/* Layout 1: Central (Hero & Parásitos) */
+.symmetric-hero, .orb-layout {
+    width: 100%; height: 100%; max-width: 1400px;
+    display: flex; justify-content: center; align-items: center; position: relative;
+}
+.hero-bg {
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+    background-size: cover; background-position: center;
+    border-radius: var(--radius);
+    opacity: 0.3;
+    z-index: -1;
+    mask-image: radial-gradient(circle, black 40%, transparent 100%);
+    -webkit-mask-image: radial-gradient(circle, black 40%, transparent 100%);
+}
+.image-glitch { animation: slowDrift 20s infinite alternate ease-in-out; }
+.pulse-bg { animation: pulseBg 10s infinite alternate; }
+
+@keyframes slowDrift { 0% { transform: scale(1.05) translateX(-20px); } 100% { transform: scale(1.1) translateX(20px); } }
+@keyframes pulseBg { 0% { opacity: 0.2; transform: scale(1); } 100% { opacity: 0.4; transform: scale(1.05); } }
+
+.hero-glass-box, .orb-glass-box {
+    width: 90%; max-width: 1000px; padding: 4rem; text-align: center;
+}
+.symmetric-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; margin-top: 3rem;
+    text-align: left;
+}
+.grid-item h3 { font-size: 1.5rem; color: var(--accent-2); margin-bottom: 1rem; }
+
+/* Layout 2: Espejo (Split simétrico 50/50) */
+.mirror-layout {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 3vw;
+    width: 100%; max-width: 1600px; height: 85vh; /* Altura estricta para simetría */
+}
+.mirror-panel {
+    display: flex; flex-direction: column; height: 100%; width: 100%;
+}
+.panel-image {
+    flex: 1; /* Toma la mitad superior dinámicamente */
+    min-height: 40%;
+    background-size: cover; background-position: center;
+    border-bottom: 1px solid var(--glass-border);
+}
+.panel-content {
+    flex: 1.2; /* Toma la mitad inferior */
+    padding: 2.5rem; display: flex; flex-direction: column; justify-content: flex-start;
+}
+.panel-content h2 { font-size: clamp(2rem, 3vw, 3rem); font-family: var(--font-head); }
+
+/* Layout 3: Comparación con Encabezado Fijo */
+.comparison-layout { height: 70vh; margin-top: 15vh; }
+.header-overlay {
+    position: absolute; top: 5vh; left: 50%; transform: translateX(-50%);
+    width: 90%; max-width: 1000px; text-align: center; z-index: 10;
+}
+.header-overlay h2 { font-size: 2.5rem; color: var(--accent-1); margin-bottom: 0.5rem; font-family: var(--font-head); }
+.border-accent { border-top: 4px solid var(--accent-1); }
+
+/* Listas Premium */
+.premium-list { list-style: none; padding-left: 0; }
+.premium-list li {
+    position: relative; padding-left: 25px; margin-bottom: 10px;
+}
+.premium-list li::before {
+    content: '►'; position: absolute; left: 0; top: 2px; color: var(--accent-2); font-size: 0.8rem;
 }
 
-.clean-list strong {
-    color: var(--gris-oscuro);
+.scroll-down-hint {
+    position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%);
+    font-size: 0.9rem; letter-spacing: 2px; text-transform: uppercase; color: rgba(255,255,255,0.5);
+    animation: bounce 2s infinite; pointer-events: none;
+}
+@keyframes bounce { 0%, 100% { transform: translate(-50%, 0); } 50% { transform: translate(-50%, 10px); } }
+
+/* ==========================================================================
+   RESPONSIVE ERICTO (No romper cuadros en móviles)
+   ========================================================================== */
+@media (max-width: 1024px) {
+    .mirror-layout { grid-template-columns: 1fr; grid-template-rows: 1fr 1fr; height: 90vh; }
+    .mirror-panel { flex-direction: row; }
+    .panel-image { flex: 1; border-bottom: none; border-right: 1px solid var(--glass-border); min-height: 100%; }
+    .panel-content { flex: 1.5; padding: 1.5rem; }
+    .comparison-layout { margin-top: 20vh; height: 75vh; }
 }
 
-/* --- Media Queries --- */
 @media (max-width: 768px) {
-    .split-layout {
-        flex-direction: column;
-    }
-    .comparison-grid {
-        grid-template-columns: 1fr;
-    }
-    .hero {
-        padding-top: 15vh;
-    }
-    .card-image {
-        height: 200px;
-    }
+    .snap-slide { padding: 2vw; }
+    .mirror-panel { flex-direction: column; }
+    .panel-image { min-height: 35%; border-right: none; border-bottom: 1px solid var(--glass-border); }
+    .panel-content { padding: 1rem; }
+    .symmetric-grid { grid-template-columns: 1fr; gap: 1.5rem; margin-top: 1.5rem; }
+    .hero-glass-box, .orb-glass-box { padding: 2rem; width: 95%; }
+    
+    /* En móvil, la inversión ayuda a la simetría visual si hacemos scroll */
+    .reverse-mobile { display: flex; flex-direction: column; gap: 2vw; }
+    
+    /* El título header-overlay ocupa mucho espacio en móvil, lo ajustamos */
+    .header-overlay { top: 2vh; }
+    .header-overlay p { display: none; /* Ocultamos el texto descriptivo extra en móvil para priorizar cajas */ }
+    .comparison-layout { margin-top: 12vh; height: 85vh; }
+    
+    /* Resetear transformaciones 3D en móvil por rendimiento */
+    .3d-card { transform: none !important; transition: none !important; }
 }
