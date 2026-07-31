@@ -1,238 +1,301 @@
 /* ==========================================================================
-   VARIABLES Y ESTILOS BASE
+   DISEÑO PRO (NVIDIA / APPLE) - MINIMALISMO Y SIMETRÍA ABSOLUTA
    ========================================================================== */
 :root {
-    --bg-base: #0a0a0c;
-    --text-main: #f5f5f7;
-    --text-muted: #a1a1aa;
-    --accent-1: #00ff88;
-    --accent-2: #00d4ff;
+    --bg-color: #000000;
+    --surface-color: #111112;
+    --border-color: #2a2a2c;
+    --text-primary: #f5f5f7;
+    --text-secondary: #86868b;
+    --accent: #2997ff; /* Azul elegante de interfaces Pro */
     
-    --glass-bg: rgba(20, 20, 25, 0.4);
-    --glass-border: rgba(255, 255, 255, 0.1);
-    --glass-shadow: 0 30px 60px rgba(0, 0, 0, 0.5);
-    
-    --radius: 24px;
-    --font-ui: 'SF Pro Display', system-ui, sans-serif;
-    --font-head: 'Space Grotesk', sans-serif;
+    --font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
-* { margin: 0; padding: 0; box-sizing: border-box; }
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    /* Suavizado de fuentes para pantallas de alta resolución */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
 
 body {
-    font-family: var(--font-ui);
-    background-color: var(--bg-base);
-    color: var(--text-main);
-    overflow: hidden; 
+    background-color: var(--bg-color);
+    color: var(--text-primary);
+    font-family: var(--font-family);
+    line-height: 1.5;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 5vw;
+}
+
+/* ==========================================================================
+   TIPOGRAFÍA Y ALINEACIÓN
+   ========================================================================== */
+h1 {
+    font-size: clamp(3.5rem, 8vw, 6rem);
+    font-weight: 700;
+    letter-spacing: -0.04em;
+    line-height: 1.05;
+    margin-bottom: 1rem;
+}
+
+h2.section-title, .comparison-header h2 {
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    margin-bottom: 3rem;
+    text-align: center;
+}
+
+h3 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: var(--text-primary);
+}
+
+p {
+    font-size: 1.1rem;
+    color: var(--text-secondary);
+    margin-bottom: 1rem;
+}
+
+/* ==========================================================================
+   SECCIÓN 1: HERO PORTADA
+   ========================================================================== */
+.hero-section {
+    position: relative;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    padding-bottom: 10vh;
+    text-align: center;
+}
+
+.hero-image-container {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    z-index: -1;
+}
+
+.hero-image-container img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    object-position: center 30%;
+    opacity: 0.6;
+}
+
+.hero-fade {
+    position: absolute;
+    bottom: 0; left: 0; width: 100%; height: 60%;
+    background: linear-gradient(to top, var(--bg-color) 0%, transparent 100%);
+}
+
+.subtitle {
+    font-size: clamp(1.2rem, 3vw, 2rem);
+    color: var(--text-secondary);
+}
+
+/* ==========================================================================
+   SECCIÓN 2: INTRO (Grid Perfecto)
+   ========================================================================== */
+.intro-section {
+    padding: 10vh 0;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.grid-2 {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 4rem;
+}
+
+.text-block h3 { color: var(--text-secondary); text-transform: uppercase; letter-spacing: 2px; font-size: 0.9rem;}
+.text-block p { color: var(--text-primary); font-size: 1.3rem; line-height: 1.6; }
+
+/* ==========================================================================
+   SECCIÓN 3: BENTO GRID (Las Tarjetas No se Rompen)
+   ========================================================================== */
+.bento-section {
+    padding: 12vh 0;
+}
+
+.bento-grid {
+    display: grid;
+    /* Grid estricto: Se adapta manteniendo proporciones sin colapsar */
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 2rem;
+}
+
+.bento-card {
+    background-color: var(--surface-color);
+    border-radius: 20px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--border-color);
+}
+
+.card-img-wrapper {
+    width: 100%;
+    height: 250px; /* Altura fija para mantener simetría perfecta */
+    background: #000;
+}
+
+.card-img-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.card-content {
+    padding: 2.5rem;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.card-content p.highlight {
+    color: var(--text-primary);
+    margin-top: auto; /* Empuja este texto al final, manteniendo cajas iguales */
+    padding-top: 1rem;
+    border-top: 1px solid var(--border-color);
+}
+
+/* ==========================================================================
+   SECCIÓN 4: BANNER PARÁSITOS
+   ========================================================================== */
+.banner-section {
+    position: relative;
+    padding: 15vh 5vw;
+    text-align: center;
+    border-top: 1px solid var(--border-color);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.banner-bg {
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;
+}
+
+.banner-bg img {
+    width: 100%; height: 100%; object-fit: cover;
+}
+
+.banner-overlay {
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.85); /* Oscurecido fuertemente para legibilidad */
+}
+
+.banner-content {
+    position: relative; z-index: 1; max-width: 800px; margin: 0 auto;
+}
+
+.banner-content h2 { font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 700; margin-bottom: 1rem; }
+.banner-lead { font-size: 1.5rem; color: var(--accent); margin-bottom: 2rem; }
+
+.banner-info {
+    background: var(--surface-color);
+    padding: 2.5rem;
+    border-radius: 20px;
+    border: 1px solid var(--border-color);
+    text-align: left;
+}
+
+.banner-info ul { padding-left: 1.5rem; margin-top: 1rem; color: var(--text-primary); }
+.banner-info li { margin-bottom: 0.5rem; }
+
+/* ==========================================================================
+   SECCIÓN 5: COMPARACIÓN (Tabla de Datos Pro)
+   ========================================================================== */
+.comparison-section {
+    padding: 12vh 0;
+}
+
+.comparison-header {
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto 5rem auto;
+}
+
+.comparison-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+}
+
+.comp-column {
+    background-color: var(--surface-color);
+    padding: 3rem;
+    border-radius: 20px;
+    border: 1px solid var(--border-color);
+}
+
+.comp-img {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+    border-radius: 12px;
+    margin-bottom: 2rem;
+}
+
+.comp-title { font-size: 2rem; margin-bottom: 0.5rem; }
+.comp-def { color: var(--accent); font-weight: 500; margin-bottom: 2rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border-color); }
+
+/* Data List (Especificaciones estilo Apple Spec Sheet) */
+.spec-list {
+    display: grid;
+    grid-template-columns: 100px 1fr; /* Columna izquierda fija, derecha flexible */
+    row-gap: 1.5rem;
+    column-gap: 1.5rem;
+}
+
+.spec-list dt {
+    color: var(--text-primary);
+    font-weight: 600;
+    font-size: 0.95rem;
+    border-top: 1px solid var(--border-color);
+    padding-top: 0.5rem;
+}
+
+.spec-list dd {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+    border-top: 1px solid var(--border-color);
+    padding-top: 0.5rem;
     line-height: 1.6;
 }
 
 /* ==========================================================================
-   SCROLL SNAP ESTRUCTURA
+   ANIMACIONES Y RESPONSIVE
    ========================================================================== */
-.snap-container {
-    height: 100vh;
-    overflow-y: scroll;
-    scroll-snap-type: y mandatory;
-    scroll-behavior: smooth;
-    position: relative;
-    z-index: 2;
-}
-
-.snap-slide {
-    min-height: 100vh;
-    width: 100vw;
-    scroll-snap-align: start;
-    scroll-snap-stop: always;
-    position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 3vw;
-}
-
-/* ==========================================================================
-   ÁREA DE TEXTO COMPLETA Y BARRA DE DESPLAZAMIENTO (SCROLLBOX)
-   ========================================================================== */
-.content-scrollbox {
-    flex-grow: 1; /* Ocupa el espacio disponible */
-    max-height: 40vh; /* Mucho más espacio para que quepa todo el texto */
-    overflow-y: auto;
-    padding-right: 15px;
-    margin-top: 15px;
-    /* Efecto de desvanecimiento para indicar que hay más texto */
-    mask-image: linear-gradient(to bottom, black 85%, transparent 100%);
-    -webkit-mask-image: linear-gradient(to bottom, black 85%, transparent 100%);
-}
-
-.content-scrollbox p { margin-bottom: 1.2rem; font-size: clamp(1rem, 1.1vw, 1.1rem); color: #d1d1d6; }
-.content-scrollbox strong { color: var(--accent-1); }
-
-/* Scrollbar Hermoso */
-.content-scrollbox::-webkit-scrollbar { width: 6px; }
-.content-scrollbox::-webkit-scrollbar-track { background: rgba(255,255,255,0.05); border-radius: 10px; }
-.content-scrollbox::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.3); border-radius: 10px; }
-.content-scrollbox::-webkit-scrollbar-thumb:hover { background: var(--accent-1); }
-
-/* ==========================================================================
-   NUEVO SISTEMA DE IMÁGENES (CERO RECORTES)
-   ========================================================================== */
-.image-showcase {
-    position: relative;
-    width: 100%;
-    flex: 1; /* Ocupa la mitad superior del panel */
-    min-height: 35vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden;
-    border-bottom: 1px solid var(--glass-border);
-    background-color: #000;
-}
-
-.image-blur-bg {
-    position: absolute;
-    top: -10%; left: -10%; width: 120%; height: 120%;
-    background-size: cover;
-    background-position: center;
-    filter: blur(25px) brightness(0.4);
-    z-index: 1;
-}
-
-.image-contain {
-    position: relative;
-    max-width: 90%;
-    max-height: 90%;
-    object-fit: contain; /* GARANTIZA QUE LA IMAGEN NO SE RECORTE */
-    z-index: 2;
-    border-radius: 8px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.6);
-}
-
-/* ==========================================================================
-   DISEÑO 3D Y EFECTOS
-   ========================================================================== */
-.3d-card {
-    position: relative;
-    background: var(--glass-bg);
-    backdrop-filter: blur(30px);
-    -webkit-backdrop-filter: blur(30px);
-    border: 1px solid var(--glass-border);
-    border-radius: var(--radius);
-    box-shadow: var(--glass-shadow);
-    transform-style: preserve-3d;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-}
-
-.glow-layer {
-    position: absolute;
-    top: 0; left: 0; width: 100%; height: 100%;
-    background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(255,255,255,0.08) 0%, transparent 60%);
-    pointer-events: none;
-    z-index: 10;
+.fade-in {
     opacity: 0;
-    transition: opacity 0.3s;
+    transform: translateY(30px);
+    transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1), transform 1s cubic-bezier(0.16, 1, 0.3, 1);
 }
-.3d-card:hover .glow-layer { opacity: 1; }
-
-.ambient-background {
-    position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
-    width: 80vw; height: 80vh;
-    background: radial-gradient(circle, rgba(0,255,136,0.1) 0%, rgba(0,212,255,0.08) 40%, transparent 70%);
-    filter: blur(100px); z-index: 0; pointer-events: none;
+.fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
 }
 
-/* ==========================================================================
-   LAYOUTS SIMÉTRICOS
-   ========================================================================== */
-.symmetric-hero, .orb-layout {
-    width: 100%; height: 100%; max-width: 1400px;
-    display: flex; justify-content: center; align-items: center; position: relative;
-}
-
-.hero-bg {
-    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-    background-size: cover; background-position: center;
-    border-radius: var(--radius); opacity: 0.3; z-index: -1;
-    mask-image: radial-gradient(circle, black 40%, transparent 100%);
-    -webkit-mask-image: radial-gradient(circle, black 40%, transparent 100%);
-}
-
-.hero-glass-box, .orb-glass-box {
-    width: 90%; max-width: 1000px; padding: 4rem; text-align: center;
-}
-
-/* Espejo */
-.mirror-layout {
-    display: grid; grid-template-columns: 1fr 1fr; gap: 3vw;
-    width: 100%; max-width: 1600px; height: 88vh;
-}
-.mirror-panel {
-    display: flex; flex-direction: column; height: 100%; width: 100%;
-}
-.panel-content {
-    flex: 1; padding: 2rem; display: flex; flex-direction: column;
-}
-.panel-content h2 { font-size: clamp(1.8rem, 2.5vw, 2.5rem); font-family: var(--font-head); margin-bottom: 0.5rem; }
-
-/* Comparación */
-.comparison-layout { height: 75vh; margin-top: 13vh; }
-.header-overlay {
-    position: absolute; top: 3vh; left: 50%; transform: translateX(-50%);
-    width: 90%; max-width: 1200px; text-align: center; z-index: 10;
-}
-.header-overlay h2 { font-size: 2.2rem; color: var(--accent-1); margin-bottom: 0.5rem; font-family: var(--font-head); }
-.header-overlay p { font-size: 1rem; color: #a1a1aa; }
-.border-accent { border-top: 4px solid var(--accent-1); }
-
-/* Listas y Tipografía */
-.title-gradient {
-    font-family: var(--font-head); font-size: clamp(3rem, 6vw, 5.5rem);
-    background: linear-gradient(135deg, var(--accent-1), var(--accent-2));
-    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-    line-height: 1.1; margin-bottom: 1rem;
-}
-.text-emerald { color: var(--accent-1); font-family: var(--font-head); font-size: 2.2rem; }
-.symmetric-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; margin-top: 2rem; text-align: left; }
-.premium-list { list-style: none; padding-left: 0; }
-.premium-list li { position: relative; padding-left: 25px; margin-bottom: 10px; color: #d1d1d6; }
-.premium-list li::before { content: '►'; position: absolute; left: 0; top: 2px; color: var(--accent-2); font-size: 0.8rem; }
-
-/* Animaciones */
-.transform-up { opacity: 0; transform: translateY(30px); transition: all 0.8s ease; }
-.transform-up.active { opacity: 1; transform: translateY(0); }
-.delay-1 { transition-delay: 0.1s; }
-.delay-2 { transition-delay: 0.2s; }
-.scroll-down-hint {
-    position: absolute; bottom: 2vh; left: 50%; transform: translateX(-50%);
-    font-size: 0.8rem; letter-spacing: 2px; text-transform: uppercase; color: rgba(255,255,255,0.5);
-    animation: bounce 2s infinite; pointer-events: none;
-}
-@keyframes bounce { 0%, 100% { transform: translate(-50%, 0); } 50% { transform: translate(-50%, 8px); } }
-
-/* ==========================================================================
-   RESPONSIVE
-   ========================================================================== */
-@media (max-width: 1024px) {
-    .mirror-layout { grid-template-columns: 1fr; grid-template-rows: 1fr 1fr; height: 90vh; }
-    .mirror-panel { flex-direction: row; }
-    .image-showcase { flex: 1; border-bottom: none; border-right: 1px solid var(--glass-border); min-height: 100%; }
-    .panel-content { flex: 1.5; padding: 1.5rem; }
-    .comparison-layout { margin-top: 15vh; height: 80vh; }
-    .header-overlay p { display: none; } /* Ocultar texto largo del header en tablet para dar espacio */
+@media (max-width: 992px) {
+    .comparison-grid { grid-template-columns: 1fr; gap: 2rem; }
+    .spec-list { grid-template-columns: 1fr; } /* En móvil se apilan las especificaciones */
+    .spec-list dt { border-top: none; padding-top: 1rem; color: var(--accent); }
+    .spec-list dd { border-top: none; padding-top: 0; padding-bottom: 1rem; border-bottom: 1px solid var(--border-color); }
 }
 
 @media (max-width: 768px) {
-    .snap-slide { padding: 4vw; }
-    .mirror-panel { flex-direction: column; }
-    .image-showcase { min-height: 30vh; border-right: none; border-bottom: 1px solid var(--glass-border); }
-    .panel-content { padding: 1.5rem; flex: unset; }
-    .symmetric-grid { grid-template-columns: 1fr; gap: 1.5rem; margin-top: 1.5rem; }
-    .hero-glass-box, .orb-glass-box { padding: 2rem; width: 100%; }
-    .reverse-mobile { display: flex; flex-direction: column; gap: 3vw; }
-    .header-overlay { top: 2vh; }
-    .comparison-layout { margin-top: 10vh; height: 85vh; }
-    .content-scrollbox { max-height: 30vh; } /* Ajuste para móviles */
+    .bento-grid { grid-template-columns: 1fr; }
+    .card-img-wrapper { height: 200px; }
+    .comp-column { padding: 1.5rem; }
+    .banner-info { padding: 1.5rem; }
 }
